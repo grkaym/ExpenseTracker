@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Carbon\Carbon;
 
 class Transaction extends Model
 {
@@ -35,5 +37,40 @@ class Transaction extends Model
     public function category(): HasOne
     {
         return $this->hasOne(Category::class);
+    }
+
+    /**
+     * Scope a query to only include transactions type of 'income'. 
+     */
+    public function scopeIncome(Builder $query): Builder
+    {
+        return $query->where('type', '=', 'income');
+    }
+
+    /**
+     * Scope a query to only include transactions type of 'expense'.
+     */
+    public function scopeExpense(Builder $query): Builder
+    {
+        return $query->where('type', '=', 'expense');
+    }
+
+    /**
+     * Scope a query to only include specific user.
+     */
+    public function scopeForUser(Builder $query, int $userId): Builder
+    {
+        return $query->where('user_id', $userId);
+    }
+
+    /**
+     * Scope a query to only include specific month.
+     */
+    public function scopeInMonth(Builder $query, Carbon $month): Builder
+    {
+        return $query->whereBetween('date', [
+            $month->copy()->startOfMonth()->toDateString(),
+            $month->copy()->endOfMonth()->toDateString(),
+        ]);
     }
 }
