@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -29,8 +29,8 @@ class Category extends Model
     /**
      * relationship for Transaction model
      */
-    public function transaction(): BelongsTo
+    public function transactions(): HasMany
     {
-        return $this->belongsTo(Transaction::class);
+        return $this->hasMany(Transactions::class);
     }
 }
