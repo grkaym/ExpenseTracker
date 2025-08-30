@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import SummaryCard from '@/Components/SummaryCard';
-import Chart from '@/Components/Chart';
+import SummaryCard from '@/components/SummaryCard';
+import Chart from '@/components/Chart';
 
 
 export default function Dashboard({ ...props }) {

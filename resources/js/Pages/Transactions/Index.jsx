@@ -1,11 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import Card from '@/Components/Card';
-import SelectBox from '@/Components/SelectBox';
-import Button from '@/Components/Button';
+import Card from '@/components/Card';
+import SelectBox from '@/components/SelectBox';
+import Button from '@/components/Button';
 import { Link } from '@inertiajs/react';
 
-export default function Transactions({ ...props }) {
+export default function Index({ ...props }) {
     const transactionType = [
         {value: 'both', label: 'both'},
         {value: 'expense', label: 'expense'},
@@ -19,7 +19,7 @@ export default function Transactions({ ...props }) {
                 <h2 className='font-bold text-xl/8'>
                     Transactions
                 </h2>
-                <Link href={route('dashboard')}>
+                <Link href={route('transactions.create')}>
                     <Button text='+ Add Transaction' />
                 </Link>
             </div>

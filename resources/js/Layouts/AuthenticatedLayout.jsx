@@ -1,7 +1,7 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import ApplicationLogo from '@/breeze/ApplicationLogo';
+import Dropdown from '@/breeze/Dropdown';
+import NavLink from '@/breeze/NavLink';
+import ResponsiveNavLink from '@/breeze/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
@@ -32,8 +32,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                     Dashboard
                                 </NavLink>
                                 <NavLink
-                                    href={route('transactions')}
-                                    active={route().current('transactions')}
+                                    href={route('transactions.index')}
+                                    active={route().current('transactions.*')}
                                 >
                                     Transactions
                                 </NavLink>

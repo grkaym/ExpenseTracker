@@ -1,4 +1,4 @@
-import Card from '@/Components/Card';
+import Card from '@/components/Card';
 
 export default function SummaryCard({ ...props }) {
     return (
