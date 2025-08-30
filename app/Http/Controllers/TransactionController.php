@@ -29,4 +29,12 @@ class TransactionController extends Controller
             'transactions' => $transactions,
         ]);
     }
+
+    /**
+     * Display the transaction creation page
+     */
+    public function create()
+    {
+        return Inertia::render('Transactions/Create');
+    }
 }

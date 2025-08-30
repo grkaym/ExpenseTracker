@@ -17,8 +17,18 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+    // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
+    // transactions
+    Route::controller(TransactionController::class)
+        ->prefix('transactions')
+        ->name('transactions.')
+        ->group(function() {
+            Route::get('/index', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
+        }
+    );
 });
 
 Route::middleware('auth')->group(function () {
