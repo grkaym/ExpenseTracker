@@ -1,0 +1,5 @@
+resources/js/breeze
+resources/js/Pages/Auth
+resources/js/Pages/Profile
+resources/js/Layouts/AuthenticatedLayout.jsx
+resources/js/Layouts/GuestLayout.jsx
