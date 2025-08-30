@@ -5,7 +5,7 @@ export default function SelectBox({ className = '', optionArray, ...props }) {
     return (
         <Select.Root defaultValue={optionArray[0].value}>
             <Select.Trigger
-                className='inline-flex items-center gap-2 px-2 py-1 ml-2 border rounded border-slate-200 focus:border-amber-500 focus:outline-none'
+                className='inline-flex items-center gap-2 px-2 py-1 ml-2 text-sm border rounded border-slate-200 focus:border-amber-500 focus:outline-none'
             >
                 <Select.Value />
                 <Select.Icon><CaretDownIcon /></Select.Icon>
