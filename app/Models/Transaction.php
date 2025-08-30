@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Carbon\Carbon;
 
 class Transaction extends Model
 {
@@ -39,7 +39,7 @@ class Transaction extends Model
     }
 
     /**
-     * Scope a query to only include transactions type of 'income'. 
+     * Scope a query to only include transactions type of 'income'.
      */
     public function scopeIncome(Builder $query): Builder
     {

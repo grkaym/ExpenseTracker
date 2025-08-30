@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Inertia\Inertia;
 use App\Models\Transaction;
 use Auth;
-use Carbon\Carbon;
-use Illuminate\Support\Collection;
+use Inertia\Inertia;
 
 class TransactionController extends Controller
 {
@@ -21,9 +18,9 @@ class TransactionController extends Controller
 
         // Get all transactions.
         $transactions = Transaction::with('category')
-                        ->forUser($userId)
-                        ->orderBy('date')
-                        ->get();
+            ->forUser($userId)
+            ->orderBy('date')
+            ->get();
 
         return Inertia::render('Transactions/Index', [
             'transactions' => $transactions,

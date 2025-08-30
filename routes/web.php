@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -23,12 +23,12 @@ Route::middleware('auth')->group(function () {
     Route::controller(TransactionController::class)
         ->prefix('transactions')
         ->name('transactions.')
-        ->group(function() {
+        ->group(function () {
             Route::get('/index', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/store', 'store')->name('store');
         }
-    );
+        );
 });
 
 Route::middleware('auth')->group(function () {
