@@ -25,7 +25,7 @@ class TransactionController extends Controller
                         ->orderBy('date')
                         ->get();
 
-        return Inertia::render('Transactions', [
+        return Inertia::render('Transactions/Index', [
             'transactions' => $transactions,
         ]);
     }
