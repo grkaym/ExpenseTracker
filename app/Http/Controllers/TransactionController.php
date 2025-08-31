@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\Rule;
 
 class TransactionController extends Controller
 {
@@ -46,11 +45,11 @@ class TransactionController extends Controller
     {
         // Validate and store the input values...
         $validated = $request->validate([
-            'date'      => 'required|date_format:Y-m-d',
-            'category'  => 'required|exists:categories,id',
-            'type'      => 'required|in:expense,income',
-            'amount'    => 'required|decimal:2|max_digits:10|min:0',
-            'note'      => 'nullable|max:255',
+            'date' => 'required|date_format:Y-m-d',
+            'category' => 'required|exists:categories,id',
+            'type' => 'required|in:expense,income',
+            'amount' => 'required|decimal:2|max_digits:10|min:0',
+            'note' => 'nullable|max:255',
         ]);
 
         return to_route('transactions.index');
