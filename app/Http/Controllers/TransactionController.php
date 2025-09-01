@@ -52,6 +52,17 @@ class TransactionController extends Controller
             'note' => 'nullable|max:255',
         ]);
 
+        // Insert values into Transaction Model.
+        $t = new Transaction;
+        $t->user_id = Auth::id();
+        $t->date = $request->date;
+        $t->category_id = $request->category;
+        $t->type = $request->type;
+        $t->amount = $request->amount;
+        $t->note = $request->note;
+        $t->save();
+
+        // Redirect to transaction list page.
         return to_route('transactions.index');
     }
 }
