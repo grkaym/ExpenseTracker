@@ -48,7 +48,7 @@ class TransactionController extends Controller
             'date' => 'required|date_format:Y-m-d',
             'category' => 'required|exists:categories,id',
             'type' => 'required|in:expense,income',
-            'amount' => 'required|decimal:2|max_digits:10|min:0',
+            'amount' => 'required|decimal:2|min:0|max:9999999999.99',
             'note' => 'nullable|max:255',
         ]);
 
