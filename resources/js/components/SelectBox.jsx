@@ -23,7 +23,7 @@ export default function SelectBox({
       defaultValue={val}
       onValueChange={(v) => {
         setVal(v);
-        onChange(v);
+        onChange && onChange(v);
       }}
     >
       <Select.Trigger
