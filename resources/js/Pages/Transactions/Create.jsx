@@ -8,11 +8,14 @@ import DatePicker from '@/components/DatePicker';
 import SelectBox from '@/components/SelectBox';
 import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
+import { format, parseISO } from 'date-fns';
 
 export default function Create() {
+  const today = format(new Date(), 'yyyy-MM-dd');
+
   // Get useForm to control forms.
   const { data, setData, post, processing, errors } = useForm({
-    date: new Date(),
+    date: today,
     category: '1',
     type: 'expense',
     amount: '',
@@ -35,8 +38,8 @@ export default function Create() {
           <Field htmlFor="date" label="Date" error={errors.date}>
             <DatePicker
               id="date"
-              value={data.date}
-              onChange={(d) => setData('date', new Date(d))}
+              value={parseISO(data.date)}
+              onChange={(d) => setData('date', format(d, 'yyyy-MM-dd'))}
               className="w-full"
             />
           </Field>
