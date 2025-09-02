@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,17 @@ class TransactionController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Transactions/Create');
+        // Get login user's id.
+        $userId = Auth::id();
+
+        // Get categories for the login user.
+        $categories = Category::forUser($userId)
+            ->orderBy('type')
+            ->get();
+        
+        return Inertia::render('Transactions/Create', [
+            'categories' => $categories,
+        ]);
     }
 
     /**

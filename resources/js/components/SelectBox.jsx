@@ -1,8 +1,9 @@
 import * as Select from '@radix-ui/react-select';
 import { CaretDownIcon } from '@radix-ui/react-icons';
 import { useState, useEffect } from 'react';
+import { memo } from 'react';
 
-export default function SelectBox({
+function SelectBoxImpl({
   optionArray,
   id,
   value = '',
@@ -44,10 +45,10 @@ export default function SelectBox({
           <Select.ScrollUpButton />
           <Select.Viewport>
             <Select.Group>
-              {optionArray.map((e, index) => {
+              {optionArray.map((e) => {
                 return (
                   <Select.Item
-                    key={index}
+                    key={e.value}
                     value={e.value}
                     className={
                       `relative flex cursor-pointer select-none items-center gap-2 rounded p-2 text-sm outline-none data-[highlighted]:bg-amber-100 data-[state=checked]:bg-amber-200 data-[highlighted]:text-amber-800 data-[state=checked]:text-amber-900 ` +
@@ -68,3 +69,7 @@ export default function SelectBox({
     </Select.Root>
   );
 }
+
+// Re-render only when props change
+const SelectBox = memo(SelectBoxImpl);
+export default SelectBox;

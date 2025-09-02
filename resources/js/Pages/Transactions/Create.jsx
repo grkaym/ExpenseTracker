@@ -1,4 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { useMemo, useCallback } from 'react';
 import { Head } from '@inertiajs/react';
 import { useForm } from '@inertiajs/react';
 import Card from '@/components/Card';
@@ -10,17 +11,44 @@ import Button from '@/components/Button';
 import TextArea from '@/components/TextArea';
 import { format, parseISO } from 'date-fns';
 
-export default function Create() {
+export default function Create({ categories }) {
+  // Convert categories to an option array.
+  const categoryList = useMemo(
+    () => categories.map((c) => ({ value: String(c.id), label: c.name })),
+    [categories]
+  );
+  // Convert types to an option array.
+  const typeOptions = useMemo(
+    () => [
+      { value: 'expense', label: 'expense' },
+      { value: 'income', label: 'income' },
+    ],
+    []
+  );
+
+  // Get today's Date object.
   const today = format(new Date(), 'yyyy-MM-dd');
 
   // Get useForm to control forms.
   const { data, setData, post, processing, errors } = useForm({
     date: today,
-    category: '1',
+    category: categoryList[0].value ?? '',
     type: 'expense',
     amount: '',
     note: '',
   });
+
+  // Cache to prevent unnecessary rendering component.
+  const onCategoryChange = useCallback(
+    (v) => setData('category', v),
+    [setData]
+  );
+  const onTypeChange = useCallback((v) => setData('type', v), [setData]);
+  const onDateChange = useCallback(
+    (d) => setData('date', format(d, 'yyyy-MM-dd')),
+    [setData]
+  );
+  const dateObj = useMemo(() => parseISO(data.date), [data.date]);
 
   // submit event
   function submit(e) {
@@ -38,34 +66,28 @@ export default function Create() {
           <Field htmlFor="date" label="Date" error={errors.date}>
             <DatePicker
               id="date"
-              value={parseISO(data.date)}
-              onChange={(d) => setData('date', format(d, 'yyyy-MM-dd'))}
+              value={dateObj}
+              onChange={onDateChange}
               className="w-full"
             />
           </Field>
           {/* Category field */}
           <Field htmlFor="category" label="Category" error={errors.category}>
             <SelectBox
-              optionArray={[
-                { value: '1', label: 'Food' },
-                { value: '2', label: 'Transport' },
-              ]}
+              optionArray={categoryList}
               id="category"
               value={data.category}
-              onChange={(v) => setData('category', v)}
+              onChange={onCategoryChange}
               className="flex w-full"
             />
           </Field>
           {/* Type field */}
           <Field htmlFor="type" label="Type" error={errors.type}>
             <SelectBox
-              optionArray={[
-                { value: 'expense', label: 'expense' },
-                { value: 'income', label: 'income' },
-              ]}
+              optionArray={typeOptions}
               id="type"
               value={data.type}
-              onChange={(v) => setData('type', v)}
+              onChange={onTypeChange}
               className="flex w-full"
             />
           </Field>

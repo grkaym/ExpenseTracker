@@ -1,13 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import Datepicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function DatePicker({
-  id,
-  value = '',
-  onChange,
-  className = '',
-}) {
+function DatePickerImpl({ id, value = '', onChange, className = '' }) {
   // Get state of the Date value
   const [selectedDate, setSelectedDate] = useState(value ?? null);
 
@@ -33,3 +28,7 @@ export default function DatePicker({
     />
   );
 }
+
+// Re-render only when props change
+const DatePicker = memo(DatePickerImpl);
+export default DatePicker;
