@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -14,7 +15,7 @@ class DashboardController extends Controller
     public function index()
     {
         // Get user id.
-        $user = auth()->user()->id;
+        $user = Auth::id();
 
         // Get this month.
         // $month = Carbon::now();
