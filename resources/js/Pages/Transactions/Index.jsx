@@ -30,7 +30,7 @@ export default function Index({ ...props }) {
           <thead>
             <tr className="bg-slate-100 text-left">
               <th className="w-32 border-l border-slate-200 px-4 py-2">Date</th>
-              <th className="w-32 border-l border-slate-200 px-4 py-2">
+              <th className="w-48 border-l border-slate-200 px-4 py-2">
                 Category
               </th>
               <th className="w-24 border-l border-slate-200 px-4 py-2">Type</th>

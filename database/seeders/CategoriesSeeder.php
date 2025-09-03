@@ -12,32 +12,9 @@ class CategoriesSeeder extends Seeder
      */
     public function run(): void
     {
-        Category::create([
-            'user_id' => null,
-            'name' => 'Food',
-            'type' => 'expense',
-            'color' => 'red',
-        ]);
-
-        Category::create([
-            'user_id' => null,
-            'name' => 'Salary',
-            'type' => 'income',
-            'color' => 'green',
-        ]);
-
-        Category::create([
-            'user_id' => null,
-            'name' => 'Transport',
-            'type' => 'expense',
-            'color' => 'blue',
-        ]);
-
-        Category::create([
-            'user_id' => 2,
-            'name' => 'Tax',
-            'type' => 'expense',
-            'color' => 'amber',
-        ]);
+        // categories type of 'expense'
+        Category::factory()->expense()->count(9)->create();
+        // categories type of 'income'
+        Category::factory()->income()->count(8)->create();
     }
 }

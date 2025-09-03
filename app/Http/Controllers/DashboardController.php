@@ -18,7 +18,6 @@ class DashboardController extends Controller
         $user = Auth::id();
 
         // Get this month.
-        // $month = Carbon::now();
         $month = Carbon::now()->subMonth();
 
         // Get the amount of income/expense/net.

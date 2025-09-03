@@ -95,6 +95,14 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
                 </div>
             </form>
+
+            <hr className='my-4'/>
+
+            <Link href={route('demo.login')}>
+                <PrimaryButton className="w-full justify-center" disabled={processing}>
+                    Try Demo
+                </PrimaryButton>
+            </Link>
         </GuestLayout>
     );
 }
