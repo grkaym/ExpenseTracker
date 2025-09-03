@@ -19,8 +19,8 @@ class CategoryFactory extends Factory
         // Generate categories randomly
         return [
             'user_id' => null,
-            'type'    => 'expense',
-            'name'    => 'Food',
+            'type' => 'expense',
+            'name' => 'Food',
         ];
     }
 
@@ -34,7 +34,7 @@ class CategoryFactory extends Factory
             'Shopping', 'Health', 'Education', 'Travel', 'Others',
         ];
 
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'user_id' => null,  // common category
             'type' => 'expense',
             'name' => fake()->unique()->randomElement($names),
@@ -51,7 +51,7 @@ class CategoryFactory extends Factory
             'Gifts', 'Side Job', 'Refund', 'Other Income',
         ];
 
-        return $this->state(fn() => [
+        return $this->state(fn () => [
             'user_id' => null,  // common category
             'type' => 'income',
             'name' => fake()->unique()->randomElement($names),

@@ -61,7 +61,7 @@ test('it is invalid dates', function ($date) {
     [null],             // null
 ]);
 
-test('it is invalid types', function($type) {
+test('it is invalid types', function ($type) {
     // test user
     $user = User::find(1);
 
@@ -85,7 +85,7 @@ test('it is invalid types', function($type) {
     [null],         // null
 ]);
 
-test('it is invalid amounts', function($amount) {
+test('it is invalid amounts', function ($amount) {
     // test user
     $user = User::find(1);
 

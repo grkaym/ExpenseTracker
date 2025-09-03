@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Transaction;
 use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Database\Seeder;
 
 class TransactionsSeeder extends Seeder
@@ -19,7 +19,7 @@ class TransactionsSeeder extends Seeder
         $expenseCats = Category::where('type', 'expense')
             ->where(function ($q) use ($userId) {
                 $q->whereNull('user_id')
-                ->orWhere('user_id', $userId);
+                    ->orWhere('user_id', $userId);
             })
             ->get();
         Transaction::factory()
@@ -32,7 +32,7 @@ class TransactionsSeeder extends Seeder
         $incomeCats = Category::where('type', 'income')
             ->where(function ($q) use ($userId) {
                 $q->whereNull('user_id')
-                ->orWhere('user_id', $userId);
+                    ->orWhere('user_id', $userId);
             })
             ->get();
         Transaction::factory()

@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use App\Models\User;
-use App\Models\Transaction;
 use App\Models\Category;
-use Illuminate\Support\Str;
+use App\Models\Transaction;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DemoController extends Controller
 {
@@ -26,13 +25,13 @@ class DemoController extends Controller
         $expenseCats = Category::where('type', 'expense')
             ->where(function ($q) use ($user) {
                 $q->whereNull('user_id')
-                ->orWhere('user_id', $user->id);
+                    ->orWhere('user_id', $user->id);
             })
             ->get();
         $incomeCats = Category::where('type', 'income')
             ->where(function ($q) use ($user) {
                 $q->whereNull('user_id')
-                ->orWhere('user_id', $user->id);
+                    ->orWhere('user_id', $user->id);
             })
             ->get();
         Transaction::factory()

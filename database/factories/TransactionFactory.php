@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Category;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Transaction>
@@ -34,7 +34,7 @@ class TransactionFactory extends Factory
      */
     public function expense()
     {
-        return $this->state(fn() => ['type' => 'expense']);
+        return $this->state(fn () => ['type' => 'expense']);
     }
 
     /**
@@ -42,6 +42,6 @@ class TransactionFactory extends Factory
      */
     public function income()
     {
-        return $this->state(fn() => ['type' => 'income']);
+        return $this->state(fn () => ['type' => 'income']);
     }
 }

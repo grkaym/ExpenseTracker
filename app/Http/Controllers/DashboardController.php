@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Carbon\Carbon;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
