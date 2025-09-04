@@ -16,12 +16,7 @@ class TransactionsSeeder extends Seeder
         $userId = 1;
 
         // transactions type of 'expense'
-        $expenseCats = Category::where('type', 'expense')
-            ->where(function ($q) use ($userId) {
-                $q->whereNull('user_id')
-                    ->orWhere('user_id', $userId);
-            })
-            ->get();
+        $expenseCats = Category::type('expense')->forUser($userId)->get();
         Transaction::factory()
             ->expense()
             ->recycle($expenseCats)
@@ -29,12 +24,7 @@ class TransactionsSeeder extends Seeder
             ->create(['user_id' => $userId]);
 
         // transactions type of 'income'
-        $incomeCats = Category::where('type', 'income')
-            ->where(function ($q) use ($userId) {
-                $q->whereNull('user_id')
-                    ->orWhere('user_id', $userId);
-            })
-            ->get();
+        $incomeCats = Category::type('income')->forUser($userId)->get();
         Transaction::factory()
             ->income()
             ->recycle($incomeCats)

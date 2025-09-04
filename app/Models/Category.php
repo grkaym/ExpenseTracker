@@ -40,11 +40,22 @@ class Category extends Model
     }
 
     /**
+     * Scope a query to only include specific type.
+     */
+    public function scopeType(Builder $query, string $type): Builder
+    {
+        return $query->where('type', $type);
+    }
+
+    /**
      * Scope a query to only include specific user.
      */
     public function scopeForUser(Builder $query, int $userId): Builder
     {
         // Records with a 'null' value in the 'user_id' column are common categories to all users.
-        return $query->where('user_id', $userId)->orWhere('user_id', null);
+        return $query->where(function ($q) use ($userId) {
+            $q->whereNull('user_id')
+                ->orWhere('user_id', $userId);
+        });
     }
 }

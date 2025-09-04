@@ -22,18 +22,8 @@ class DemoController extends Controller
         );
 
         // Generate demo data with factory.
-        $expenseCats = Category::where('type', 'expense')
-            ->where(function ($q) use ($user) {
-                $q->whereNull('user_id')
-                    ->orWhere('user_id', $user->id);
-            })
-            ->get();
-        $incomeCats = Category::where('type', 'income')
-            ->where(function ($q) use ($user) {
-                $q->whereNull('user_id')
-                    ->orWhere('user_id', $user->id);
-            })
-            ->get();
+        $expenseCats = Category::type('expense')->forUser($user->id)->get();
+        $incomeCats = Category::type('income')->forUser($user->id)->get();
         Transaction::factory()
             ->expense()
             ->recycle($expenseCats)
