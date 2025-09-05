@@ -17,8 +17,14 @@ Route::get('/', function () {
     ]);
 });
 
-// Demo
-Route::get('/demo', [DemoController::class, 'index'])->name('demo.login');
+// Demo login
+Route::controller(DemoController::class)
+    ->prefix('demo')
+    ->name('demo.')
+    ->group(function() {
+        Route::get('/login', 'login')->name('login');
+        Route::get('/logout', 'logout')->name('logout');
+    });
 
 // Auth
 Route::middleware('auth')->group(function () {
@@ -32,8 +38,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/index', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/store', 'store')->name('store');
-        }
-        );
+        });
 });
 
 Route::middleware('auth')->group(function () {

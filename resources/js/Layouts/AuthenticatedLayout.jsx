@@ -75,8 +75,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                             Profile
                                         </Dropdown.Link> */}
                                         <Dropdown.Link
-                                            href={route('logout')}
-                                            method="post"
+                                            href={isDemo ? route('demo.logout') : route('logout')}
+                                            method={isDemo ? 'get' : 'post'}
                                             as="button"
                                         >
                                             Log Out
