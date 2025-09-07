@@ -10,9 +10,10 @@ function SelectBoxImpl({
   onChange,
   className = '',
   itemClassName = '',
+  defaultValue = '',
 }) {
   // Get state of the selected value
-  const [val, setVal] = useState(optionArray[0].value ?? '');
+  const [val, setVal] = useState(defaultValue ?? '');
 
   // Reflect changing date value by the parent
   useEffect(() => {

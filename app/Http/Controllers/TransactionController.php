@@ -7,27 +7,56 @@ use App\Models\Transaction;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 use Inertia\Response;
+use PDO;
 
 class TransactionController extends Controller
 {
     /**
      * Display the list of all transactions.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        // Get login user's id.
+        // Get login user's id
         $userId = Auth::id();
 
-        // Get all transactions.
+        // Get categories for the login user
+        $categories = Category::forUser($userId)
+            ->orderBy('type')
+            ->get();
+
+        $filters = [
+            'category' => $request->query('category') ?? 'all',
+            'type' => $request->query('type') ?? 'both',
+            'sort' => $request->query('sort') ?? 'newest',
+        ];
+
+        // Get filtered transactions
         $transactions = Transaction::with('category')
             ->forUser($userId)
-            ->orderBy('date')
+            ->when($request->query('category') !== 'all', function(Builder $q) use ($request) {
+                // Filter category
+                $q->where('category_id', $request->query('category'));
+            })
+            ->when($request->query('type') !== 'both', function(Builder $q) use ($request) {
+                // Filter type
+                $q->where('type', $request->query('type'));
+            })
+            ->when($request->query('sort') === 'newest', function(Builder $q) {
+                // sort (newest)
+                $q->orderBy('date', 'desc');
+            }, function(Builder $q) {
+                // sort (oldest)
+                $q->orderBy('date', 'asc');
+            })
             ->get();
 
         return Inertia::render('Transactions/Index', [
             'transactions' => $transactions,
+            'categories' => $categories,
+            'filters' => $filters,
         ]);
     }
 

@@ -1,16 +1,70 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import Card from '@/components/Card';
 import SelectBox from '@/components/SelectBox';
 import Button from '@/components/Button';
-import { Link } from '@inertiajs/react';
+import Field from '@/components/Field';
+import { useMemo, useCallback, useState } from 'react';
 
-export default function Index({ ...props }) {
-  const transactionType = [
-    { value: 'both', label: 'both' },
-    { value: 'expense', label: 'expense' },
-    { value: 'income', label: 'income' },
-  ];
+export default function Index({ transactions, categories }) {
+  // Get shared props
+  const { props } = usePage();
+  const initial = props.filters ?? {
+    type: 'both',
+    category: 'all',
+    sort: 'newest',
+  };
+
+  // Set transaction types
+  const transactionType = useMemo(
+    () => [
+      { value: 'both', label: 'Both' },
+      { value: 'expense', label: 'Expense' },
+      { value: 'income', label: 'Income' },
+    ],
+    []
+  );
+  // Set order Type
+  const sortType = useMemo(
+    () => [
+      { value: 'newest', label: 'Newest' },
+      { value: 'oldest', label: 'Oldest' },
+    ],
+    []
+  );
+  // Convert categories to an option array
+  const categoryList = useMemo(() => {
+    return [
+      { value: 'all', label: 'All' },
+      ...categories.map((c) => ({ value: String(c.id), label: c.name })),
+    ];
+  }, [categories]);
+
+  // Get useForm to control forms
+  const [filters, setFilters] = useState(initial);
+
+  // Set state on change
+  const onCategoryChange = useCallback((v) => {
+    setFilters((prev) => {
+      const next = { ...prev, category: String(v) };
+      router.get(route('transactions.index'), next);
+      return next;
+    });
+  }, []);
+  const onTypeChange = useCallback((v) => {
+    setFilters((prev) => {
+      const next = { ...prev, type: String(v) };
+      router.get(route('transactions.index'), next);
+      return next;
+    });
+  }, []);
+  const onSortChange = useCallback((v) => {
+    setFilters((prev) => {
+      const next = { ...prev, sort: String(v) };
+      router.get(route('transactions.index'), next);
+      return next;
+    });
+  }, []);
 
   return (
     <AuthenticatedLayout>
@@ -22,8 +76,29 @@ export default function Index({ ...props }) {
         </Link>
       </div>
       <Card className="mt-4">
-        Type :
-        <SelectBox optionArray={transactionType} />
+        <div className="flex justify-between gap-2">
+          <Field label="Category" className="w-full">
+            <SelectBox
+              optionArray={categoryList}
+              onChange={onCategoryChange}
+              defaultValue={filters.category}
+            />
+          </Field>
+          <Field label="Type" className="w-full">
+            <SelectBox
+              optionArray={transactionType}
+              onChange={onTypeChange}
+              defaultValue={filters.type}
+            />
+          </Field>
+          <Field label="Sort" className="w-full">
+            <SelectBox
+              optionArray={sortType}
+              onChange={onSortChange}
+              defaultValue={filters.sort}
+            />
+          </Field>
+        </div>
       </Card>
       <Card className="mt-4">
         <table className="w-full table-fixed border shadow-sm">
@@ -43,7 +118,7 @@ export default function Index({ ...props }) {
             </tr>
           </thead>
           <tbody>
-            {props.transactions.map((t, index) => {
+            {transactions.map((t, index) => {
               return (
                 <tr key={index} className="border-t">
                   <td className="border-l border-slate-200 px-4 py-2">

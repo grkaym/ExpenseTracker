@@ -1,6 +1,13 @@
-export default function Field({ label, htmlFor, error, help, children }) {
+export default function Field({
+  label,
+  htmlFor,
+  error,
+  help,
+  children,
+  className,
+}) {
   return (
-    <div className="space-y-1">
+    <div className={`space-y-1 ` + className}>
       <label htmlFor={htmlFor} className="block text-sm font-medium">
         {label}
       </label>
