@@ -21,6 +21,10 @@ class TransactionController extends Controller
     {
         // Get login user's id
         $userId = Auth::id();
+        // Get filters
+        $fCat = $request->query('category');
+        $fType = $request->query('type');
+        $fSort = $request->query('sort');
 
         // Get categories for the login user
         $categories = Category::forUser($userId)
@@ -28,23 +32,23 @@ class TransactionController extends Controller
             ->get();
 
         $filters = [
-            'category' => $request->query('category') ?? 'all',
-            'type' => $request->query('type') ?? 'both',
-            'sort' => $request->query('sort') ?? 'newest',
+            'category' => $fCat ?? 'all',
+            'type' => $fType ?? 'both',
+            'sort' => $fSort ?? 'newest',
         ];
 
         // Get filtered transactions
         $transactions = Transaction::with('category')
             ->forUser($userId)
-            ->when($request->query('category') !== 'all', function(Builder $q) use ($request) {
+            ->when($fCat && ($fCat !== 'all'), function(Builder $q) use ($fCat) {
                 // Filter category
-                $q->where('category_id', $request->query('category'));
+                $q->where('category_id', $fCat);
             })
-            ->when($request->query('type') !== 'both', function(Builder $q) use ($request) {
+            ->when($fType && ($fType !== 'both'), function(Builder $q) use ($fType) {
                 // Filter type
-                $q->where('type', $request->query('type'));
+                $q->where('type', $fType);
             })
-            ->when($request->query('sort') === 'newest', function(Builder $q) {
+            ->when($fSort && ($fSort === 'newest'), function(Builder $q) {
                 // sort (newest)
                 $q->orderBy('date', 'desc');
             }, function(Builder $q) {
