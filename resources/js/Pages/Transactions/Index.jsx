@@ -35,8 +35,12 @@ export default function Index({ transactions, categories }) {
   // Convert categories to an option array
   const categoryList = useMemo(() => {
     return [
-      { value: 'all', label: 'All' },
-      ...categories.map((c) => ({ value: String(c.id), label: c.name })),
+      { value: 'all', label: 'All', type: '' },
+      ...categories.map((c) => ({
+        value: String(c.id),
+        label: c.name,
+        type: c.type,
+      })),
     ];
   }, [categories]);
 
@@ -79,7 +83,7 @@ export default function Index({ transactions, categories }) {
         <div className="flex justify-between gap-2">
           <Field label="Category" className="w-full">
             <SelectBox
-              optionArray={categoryList}
+              groupedOptionArray={categoryList}
               onChange={onCategoryChange}
               defaultValue={filters.category}
             />

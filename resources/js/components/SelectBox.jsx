@@ -5,6 +5,7 @@ import { memo } from 'react';
 
 function SelectBoxImpl({
   optionArray,
+  groupedOptionArray,
   id,
   value = '',
   onChange,
@@ -14,6 +15,14 @@ function SelectBoxImpl({
 }) {
   // Get state of the selected value
   const [val, setVal] = useState(defaultValue ?? '');
+
+  // // Classify options by type
+  const grouped = groupedOptionArray?.reduce((acc, cur) => {
+    // Insert new array if cur.type doesn't exist in the acc
+    !acc[cur.type] && (acc[cur.type] = []);
+    acc[cur.type].push(cur);
+    return acc;
+  }, {});
 
   // Reflect changing date value by the parent
   useEffect(() => {
@@ -42,25 +51,52 @@ function SelectBoxImpl({
       </Select.Trigger>
 
       <Select.Portal>
-        <Select.Content className="rounded-lg border border-slate-300 bg-white">
+        <Select.Content className="rounded-lg border border-slate-300 bg-white p-2">
           <Select.ScrollUpButton />
-          <Select.Viewport>
-            <Select.Group>
-              {optionArray.map((e) => {
-                return (
-                  <Select.Item
-                    key={e.value}
-                    value={e.value}
-                    className={
-                      `relative flex cursor-pointer select-none items-center gap-2 rounded p-2 text-sm outline-none data-[highlighted]:bg-amber-100 data-[state=checked]:bg-amber-200 data-[highlighted]:text-amber-800 data-[state=checked]:text-amber-900 ` +
-                      itemClassName
-                    }
-                  >
-                    <Select.ItemText>{e.label}</Select.ItemText>
-                  </Select.Item>
-                );
-              })}
-            </Select.Group>
+          <Select.Viewport className="space-y-2">
+            {groupedOptionArray
+              ? Object.entries(grouped).map(([type, items], i, arr) => {
+                  return (
+                    <>
+                      <Select.Group key={type}>
+                        <Select.Label className="text-sm text-slate-500">
+                          {type}
+                        </Select.Label>
+                        {items.map((item) => {
+                          return (
+                            <Select.Item
+                              key={item.value}
+                              value={item.value}
+                              className={
+                                `relative flex cursor-pointer select-none items-center gap-2 rounded p-2 text-sm outline-none data-[highlighted]:bg-amber-100 data-[state=checked]:bg-amber-200 data-[highlighted]:text-amber-800 data-[state=checked]:text-amber-900 ` +
+                                itemClassName
+                              }
+                            >
+                              <Select.ItemText>{item.label}</Select.ItemText>
+                            </Select.Item>
+                          );
+                        })}
+                      </Select.Group>
+                      {i < arr.length - 1 && (
+                        <Select.Separator className="h-[1px] bg-slate-200" />
+                      )}
+                    </>
+                  );
+                })
+              : optionArray.map((e) => {
+                  return (
+                    <Select.Item
+                      key={e.value}
+                      value={e.value}
+                      className={
+                        `relative flex cursor-pointer select-none items-center gap-2 rounded p-2 text-sm outline-none data-[highlighted]:bg-amber-100 data-[state=checked]:bg-amber-200 data-[highlighted]:text-amber-800 data-[state=checked]:text-amber-900 ` +
+                        itemClassName
+                      }
+                    >
+                      <Select.ItemText>{e.label}</Select.ItemText>
+                    </Select.Item>
+                  );
+                })}
             <Select.Separator />
           </Select.Viewport>
           <Select.ScrollDownButton />
