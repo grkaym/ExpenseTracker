@@ -21,7 +21,7 @@ Route::get('/', function () {
 Route::controller(DemoController::class)
     ->prefix('demo')
     ->name('demo.')
-    ->group(function() {
+    ->group(function () {
         Route::get('/login', 'login')->name('login');
         Route::get('/logout', 'logout')->name('logout');
     });

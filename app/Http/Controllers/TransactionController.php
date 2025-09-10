@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Transaction;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Builder;
 use Inertia\Inertia;
 use Inertia\Response;
-use PDO;
 
 class TransactionController extends Controller
 {
@@ -40,18 +39,18 @@ class TransactionController extends Controller
         // Get filtered transactions
         $transactions = Transaction::with('category')
             ->forUser($userId)
-            ->when($fCat && ($fCat !== 'all'), function(Builder $q) use ($fCat) {
+            ->when($fCat && ($fCat !== 'all'), function (Builder $q) use ($fCat) {
                 // Filter category
                 $q->where('category_id', $fCat);
             })
-            ->when($fType && ($fType !== 'both'), function(Builder $q) use ($fType) {
+            ->when($fType && ($fType !== 'both'), function (Builder $q) use ($fType) {
                 // Filter type
                 $q->where('type', $fType);
             })
-            ->when($fSort && ($fSort === 'newest'), function(Builder $q) {
+            ->when($fSort && ($fSort === 'newest'), function (Builder $q) {
                 // sort (newest)
                 $q->orderBy('date', 'desc');
-            }, function(Builder $q) {
+            }, function (Builder $q) {
                 // sort (oldest)
                 $q->orderBy('date', 'asc');
             })
