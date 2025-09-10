@@ -57,8 +57,8 @@ function SelectBoxImpl({
             {groupedOptionArray
               ? Object.entries(grouped).map(([type, items], i, arr) => {
                   return (
-                    <>
-                      <Select.Group key={type}>
+                    <div key={type}>
+                      <Select.Group>
                         <Select.Label className="text-sm text-slate-500">
                           {type}
                         </Select.Label>
@@ -80,7 +80,7 @@ function SelectBoxImpl({
                       {i < arr.length - 1 && (
                         <Select.Separator className="h-[1px] bg-slate-200" />
                       )}
-                    </>
+                    </div>
                   );
                 })
               : optionArray.map((e) => {
