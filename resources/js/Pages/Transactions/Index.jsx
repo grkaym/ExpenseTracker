@@ -70,6 +70,8 @@ export default function Index({ transactions, categories }) {
     });
   }, []);
 
+  const isExpense = (type) => type === 'expense';
+
   return (
     <AuthenticatedLayout>
       <Head title="Transactions" />
@@ -124,7 +126,10 @@ export default function Index({ transactions, categories }) {
           <tbody>
             {transactions.map((t, index) => {
               return (
-                <tr key={index} className="border-t">
+                <tr
+                  key={index}
+                  className="border-t odd:bg-white even:bg-gray-50"
+                >
                   <td className="border-l border-slate-200 px-4 py-2">
                     {t.date}
                   </td>
@@ -134,7 +139,12 @@ export default function Index({ transactions, categories }) {
                   <td className="border-l border-slate-200 px-4 py-2">
                     {t.type}
                   </td>
-                  <td className="border-l border-slate-200 px-4 py-2 text-right">
+                  <td
+                    className={
+                      `border-l border-slate-200 px-4 py-2 text-right ` +
+                      (isExpense(t.type) ? 'text-red-400' : 'text-blue-400')
+                    }
+                  >
                     ${t.amount}
                   </td>
                   <td className="truncate border-l border-slate-200 px-4 py-2">
