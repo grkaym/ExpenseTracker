@@ -36,7 +36,7 @@ test('it stores a transaction in the databse', function () {
     ]);
 });
 
-test('it is invalid dates', function ($date) {
+test('they are invalid dates', function ($date) {
     // test user
     $user = User::find(1);
 
@@ -61,7 +61,7 @@ test('it is invalid dates', function ($date) {
     [null],             // null
 ]);
 
-test('it is invalid types', function ($type) {
+test('they are invalid types', function ($type) {
     // test user
     $user = User::find(1);
 
@@ -85,7 +85,7 @@ test('it is invalid types', function ($type) {
     [null],         // null
 ]);
 
-test('it is invalid amounts', function ($amount) {
+test('they are invalid amounts', function ($amount) {
     // test user
     $user = User::find(1);
 
