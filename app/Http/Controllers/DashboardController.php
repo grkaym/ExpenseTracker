@@ -32,10 +32,10 @@ class DashboardController extends Controller
                 SUM(CASE WHEN type = "expense" THEN amount ELSE 0 END) as expense_total,
                 SUM(CASE WHEN type = "income" THEN amount ELSE 0 END) as income_total
             ')
-                ->forUser($userId)
-                ->groupBy('ym')
-                ->orderBy('ym')
-                ->get();
+            ->forUser($userId)
+            ->groupBy('ym')
+            ->orderBy('ym')
+            ->get();
 
         // Get transactions registered recently
         $recentTrans = Transaction::with('category')
