@@ -35,6 +35,7 @@ class DashboardController extends Controller
             ->forUser($userId)
             ->groupBy('ym')
             ->orderBy('ym')
+            ->limit(5)
             ->get();
 
         // Get transactions registered recently
