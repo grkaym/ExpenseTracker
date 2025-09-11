@@ -12,11 +12,6 @@ import TextArea from '@/components/TextArea';
 import { format, parseISO } from 'date-fns';
 
 export default function Create({ categories }) {
-  // // Convert categories to an option array.
-  // const categoryList = useMemo(
-  //   () => categories.map((c) => ({ value: String(c.id), label: c.name })),
-  //   [categories]
-  // );
   // Convert categories to an option array
   const categoryList = useMemo(() => {
     return [
@@ -103,13 +98,6 @@ export default function Create({ categories }) {
           </Field>
           {/* Type field */}
           <Field htmlFor="type" label="Type" error={errors.type}>
-            {/* <SelectBox
-              optionArray={typeOptions}
-              id="type"
-              value={data.type}
-              onChange={onTypeChange}
-              className="flex w-full"
-            /> */}
             {data.type ? (
               <div className="p-2 text-lg font-normal text-slate-500">
                 {data.type}
