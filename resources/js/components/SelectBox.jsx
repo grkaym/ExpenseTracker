@@ -12,6 +12,7 @@ function SelectBoxImpl({
   className = '',
   itemClassName = '',
   defaultValue = '',
+  ph,
 }) {
   // Get state of the selected value
   const [val, setVal] = useState(defaultValue ?? '');
@@ -44,7 +45,7 @@ function SelectBoxImpl({
         }
         id={id}
       >
-        <Select.Value />
+        <Select.Value placeholder={ph} />
         <Select.Icon>
           <CaretDownIcon />
         </Select.Icon>

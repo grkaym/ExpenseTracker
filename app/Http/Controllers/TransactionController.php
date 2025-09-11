@@ -39,21 +39,24 @@ class TransactionController extends Controller
         // Get filtered transactions
         $transactions = Transaction::with('category')
             ->forUser($userId)
-            ->when($fCat && ($fCat !== 'all'), function (Builder $q) use ($fCat) {
+            ->when(($filters['category'] !== 'all'), function (Builder $q) use ($fCat) {
                 // Filter category
+                // Remove this condition if category is filtered
                 $q->where('category_id', $fCat);
             })
-            ->when($fType && ($fType !== 'both'), function (Builder $q) use ($fType) {
+            ->when(($filters['type'] !== 'both'), function (Builder $q) use ($fType) {
                 // Filter type
+                // Remove this condition if type is filtered
                 $q->where('type', $fType);
             })
-            ->when($fSort && ($fSort === 'newest'), function (Builder $q) {
+            ->when(($filters['sort'] === 'newest'), function (Builder $q) {
                 // sort (newest)
                 $q->orderBy('date', 'desc');
             }, function (Builder $q) {
                 // sort (oldest)
                 $q->orderBy('date', 'asc');
             })
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return Inertia::render('Transactions/Index', [
@@ -72,9 +75,7 @@ class TransactionController extends Controller
         $userId = Auth::id();
 
         // Get categories for the login user.
-        $categories = Category::forUser($userId)
-            ->orderBy('type')
-            ->get();
+        $categories = Category::forUser($userId)->get();
 
         return Inertia::render('Transactions/Create', [
             'categories' => $categories,

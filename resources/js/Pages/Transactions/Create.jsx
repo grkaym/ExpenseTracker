@@ -12,11 +12,22 @@ import TextArea from '@/components/TextArea';
 import { format, parseISO } from 'date-fns';
 
 export default function Create({ categories }) {
-  // Convert categories to an option array.
-  const categoryList = useMemo(
-    () => categories.map((c) => ({ value: String(c.id), label: c.name })),
-    [categories]
-  );
+  // // Convert categories to an option array.
+  // const categoryList = useMemo(
+  //   () => categories.map((c) => ({ value: String(c.id), label: c.name })),
+  //   [categories]
+  // );
+  // Convert categories to an option array
+  const categoryList = useMemo(() => {
+    return [
+      ...categories.map((c) => ({
+        value: String(c.id),
+        label: c.name,
+        type: c.type,
+      })),
+    ];
+  }, [categories]);
+
   // Convert types to an option array.
   const typeOptions = useMemo(
     () => [
@@ -32,18 +43,26 @@ export default function Create({ categories }) {
   // Get useForm to control forms.
   const { data, setData, post, processing, errors } = useForm({
     date: today,
-    category: categoryList[0].value ?? '',
-    type: 'expense',
+    category: '',
+    type: '',
     amount: '',
     note: '',
   });
 
   // Cache to prevent unnecessary rendering component.
   const onCategoryChange = useCallback(
-    (v) => setData('category', v),
+    (v) => {
+      // Update category
+      setData('category', v);
+
+      // Find target category's type
+      const type = categoryList.find((c) => c.value === v)?.type;
+      // Update type
+      setData('type', type);
+    },
     [setData]
   );
-  const onTypeChange = useCallback((v) => setData('type', v), [setData]);
+  // const onTypeChange = useCallback((v) => setData('type', v), [setData]);
   const onDateChange = useCallback(
     (d) => setData('date', format(d, 'yyyy-MM-dd')),
     [setData]
@@ -74,22 +93,32 @@ export default function Create({ categories }) {
           {/* Category field */}
           <Field htmlFor="category" label="Category" error={errors.category}>
             <SelectBox
-              optionArray={categoryList}
+              groupedOptionArray={categoryList}
               id="category"
               value={data.category}
               onChange={onCategoryChange}
               className="flex w-full"
+              ph="Select a category..."
             />
           </Field>
           {/* Type field */}
           <Field htmlFor="type" label="Type" error={errors.type}>
-            <SelectBox
+            {/* <SelectBox
               optionArray={typeOptions}
               id="type"
               value={data.type}
               onChange={onTypeChange}
               className="flex w-full"
-            />
+            /> */}
+            {data.type ? (
+              <div className="p-2 text-lg font-normal text-slate-500">
+                {data.type}
+              </div>
+            ) : (
+              <div className="p-2 text-lg font-normal text-slate-400">
+                Select a category...
+              </div>
+            )}
           </Field>
           {/* Amound field */}
           <Field htmlFor="amount" label="Amount" error={errors.amount}>
