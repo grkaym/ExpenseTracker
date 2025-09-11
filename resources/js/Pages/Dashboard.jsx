@@ -3,8 +3,15 @@ import { Head } from '@inertiajs/react';
 import SummaryCard from '@/components/SummaryCard';
 import Chart from '@/components/Chart';
 import Card from '@/components/Card';
+import TransactionTable from '@/components/TransactionTable';
 
-export default function Dashboard({ income, expense, net, chartData }) {
+export default function Dashboard({
+  income,
+  expense,
+  net,
+  chartData,
+  recentTrans,
+}) {
   return (
     <AuthenticatedLayout>
       <Head title="Dashboard" />
@@ -20,11 +27,14 @@ export default function Dashboard({ income, expense, net, chartData }) {
       </div>
       {/* Monthly Combo Chart */}
       <h2 className="mt-8 text-xl/8 font-bold">Monthly Chart</h2>
-      <Card className="my-4 max-w-4xl">
+      <Card className="my-4">
         <Chart data={chartData} />
       </Card>
       {/* Recent Transactions */}
       <h2 className="mt-8 text-xl/8 font-bold">Recent Transactions</h2>
+      <Card className="my-4">
+        <TransactionTable transactions={recentTrans} />
+      </Card>
     </AuthenticatedLayout>
   );
 }
