@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $net = round(((float) $income - (float) $expense), 2);
 
         // Get transactions for the combo chart
-        $transactions = Transaction::selectRaw('
+        $chartData = Transaction::selectRaw('
                 DATE_FORMAT(date, "%Y-%m") as ym,
                 SUM(CASE WHEN type = "expense" THEN amount ELSE 0 END) as expense_total,
                 SUM(CASE WHEN type = "income" THEN amount ELSE 0 END) as income_total
@@ -41,7 +41,7 @@ class DashboardController extends Controller
             'income' => $income,
             'expense' => $expense,
             'net' => $net,
-            'transactions' => $transactions,
+            'chartData' => $chartData,
         ]);
     }
 }

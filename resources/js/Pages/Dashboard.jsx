@@ -4,8 +4,7 @@ import SummaryCard from '@/components/SummaryCard';
 import Chart from '@/components/Chart';
 import Card from '@/components/Card';
 
-export default function Dashboard({ income, expense, net, transactions }) {
-  console.log(transactions);
+export default function Dashboard({ income, expense, net, chartData }) {
   return (
     <AuthenticatedLayout>
       <Head title="Dashboard" />
@@ -22,8 +21,10 @@ export default function Dashboard({ income, expense, net, transactions }) {
       {/* Monthly Combo Chart */}
       <h2 className="mt-8 text-xl/8 font-bold">Monthly Chart</h2>
       <Card className="my-4 max-w-4xl">
-        <Chart data={transactions} />
+        <Chart data={chartData} />
       </Card>
+      {/* Recent Transactions */}
+      <h2 className="mt-8 text-xl/8 font-bold">Recent Transactions</h2>
     </AuthenticatedLayout>
   );
 }
