@@ -31,12 +31,12 @@ class DemoController extends Controller
         Transaction::factory()
             ->expense()
             ->recycle($expenseCats)
-            ->count(10)
+            ->count(50)
             ->create(['user_id' => $user->id]);
         Transaction::factory()
             ->income()
             ->recycle($incomeCats)
-            ->count(10)
+            ->count(50)
             ->create(['user_id' => $user->id]);
 
         // Login as a demo user

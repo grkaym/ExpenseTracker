@@ -18,7 +18,7 @@ class TransactionFactory extends Factory
      */
     public function definition(): array
     {
-        $dt = fake()->dateTimeBetween('-2 month', 'now');
+        $dt = fake()->dateTimeBetween('-4 month', 'now');
         $dateStr = Carbon::instance($dt)->format('Y-m-d');
 
         return [
