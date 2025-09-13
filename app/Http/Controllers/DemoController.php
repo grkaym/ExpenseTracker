@@ -22,7 +22,11 @@ class DemoController extends Controller
         $email = "demo+{$sid}@example.com";
         $user = User::firstOrCreate(
             ['email' => $email],
-            ['name' => 'Demo'.substr($sid, 0, 6), 'password' => bcrypt(Str::random(32))]
+            [
+                'name' => 'Demo'.substr($sid, 0, 6),
+                'password' => bcrypt(Str::random(32)),
+                'is_demo' => true,
+            ],
         );
 
         // Generate the demo data with factory
