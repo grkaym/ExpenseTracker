@@ -3,8 +3,6 @@
 A minimal expense tracker built with **Laravel12** and **React (Inertia)**.
 This project was created as a **portfolio piece** to demonstrate full-stack development skills and clean UI design.
 
----
-
 ## Features
 
 - User authentication (Laravel Breeze, Inertia + React)
@@ -18,8 +16,6 @@ This project was created as a **portfolio piece** to demonstrate full-stack deve
 - CSV export
 - Multi-currency support
 
----
-
 ## Tech Stack
 
 - **Backend**: Laravel 12 (PHP 8.3)
@@ -27,8 +23,6 @@ This project was created as a **portfolio piece** to demonstrate full-stack deve
 - **Auth**: Laravel Breeze
 - **Database**: MySQL
 - **Deployment**: AWS Lightsail (plan)
-
----
 
 ## Demo Login
 - Click the **"TRY DEMO"** button on the login screen.
