@@ -81,7 +81,7 @@ export default function Index({ transactions, categories }) {
         </Link>
       </div>
       <Card className="mt-4">
-        <div className="flex justify-between gap-2">
+        <div className="flex flex-col justify-between gap-2 md:flex-row">
           <Field label="Category" className="w-full">
             <SelectBox
               groupedOptionArray={categoryList}
@@ -105,7 +105,7 @@ export default function Index({ transactions, categories }) {
           </Field>
         </div>
       </Card>
-      <Card className="mt-4">
+      <Card className="mt-4 overflow-x-auto">
         <TransactionTable transactions={transactions} />
       </Card>
     </AuthenticatedLayout>

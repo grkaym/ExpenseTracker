@@ -17,7 +17,7 @@ export default function Dashboard({
       <Head title="Dashboard" />
       <h2 className="text-xl/8 font-bold">This Month's Summary</h2>
       {/* Summary Cards */}
-      <div className="my-4 flex gap-6">
+      <div className="my-4 flex flex-col gap-6 md:flex-row">
         {/* Income */}
         <SummaryCard name="Total Income" amount={income} />
         {/* Expense */}
@@ -32,7 +32,7 @@ export default function Dashboard({
       </Card>
       {/* Recent Transactions */}
       <h2 className="mt-8 text-xl/8 font-bold">Recent Transactions</h2>
-      <Card className="my-4">
+      <Card className="my-4 overflow-x-auto">
         <TransactionTable transactions={recentTrans} />
       </Card>
     </AuthenticatedLayout>

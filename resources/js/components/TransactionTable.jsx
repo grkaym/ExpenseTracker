@@ -7,7 +7,9 @@ export default function TransactionTable({ transactions }) {
           <th className="w-48 border-l border-slate-200 px-4 py-2">Category</th>
           <th className="w-24 border-l border-slate-200 px-4 py-2">Type</th>
           <th className="w-64 border-l border-slate-200 px-4 py-2">Amount</th>
-          <th className="truncate border-l border-slate-200 px-4 py-2">Note</th>
+          <th className="w-64 truncate border-l border-slate-200 px-4 py-2">
+            Note
+          </th>
         </tr>
       </thead>
       <tbody>

@@ -19,10 +19,7 @@ export default function AuthenticatedLayout({ header, children }) {
           <div className="flex h-16 justify-between">
             <div className="flex">
               <div className="flex shrink-0 items-center font-bold">
-                <Link href="/">
-                  {/* <ApplicationLogo className="block w-auto text-gray-800 fill-current h-9" /> */}
-                  Expense Tracker
-                </Link>
+                <Link href="/">Expense Tracker</Link>
               </div>
 
               <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -137,6 +134,12 @@ export default function AuthenticatedLayout({ header, children }) {
             >
               Dashboard
             </ResponsiveNavLink>
+            <ResponsiveNavLink
+              href={route('transactions.index')}
+              active={route().current('transactions.*')}
+            >
+              Transactions
+            </ResponsiveNavLink>
           </div>
 
           <div className="border-t border-gray-200 pb-1 pt-4">
@@ -150,9 +153,9 @@ export default function AuthenticatedLayout({ header, children }) {
             </div>
 
             <div className="mt-3 space-y-1">
-              <ResponsiveNavLink href={route('profile.edit')}>
+              {/* <ResponsiveNavLink href={route('profile.edit')}>
                 Profile
-              </ResponsiveNavLink>
+              </ResponsiveNavLink> */}
               <ResponsiveNavLink
                 method="post"
                 href={route('logout')}
