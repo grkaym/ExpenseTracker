@@ -1,8 +1,16 @@
 <?php
 
-use Illuminate\Foundation\Inspiring;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Schedule;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+// Delete demo user and demo data
+Schedule::call(function () {
+    // Valid for 60 minutes
+    $validUntil = Carbon::now()->subMinute(60);
+    // Delete target users
+    User::where('is_demo', true)
+        ->where('created_at', '<=', $validUntil)
+        ->delete();
+
+})->hourly();
