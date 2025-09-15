@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Database\Query\Builder;
 
 class DashboardController extends Controller
 {
@@ -17,8 +18,8 @@ class DashboardController extends Controller
         // Get user id
         $userId = Auth::id();
 
-        // Get this month
-        $month = Carbon::now()->subMonth();
+        // Get Carbon now
+        $month = Carbon::now();
 
         // Get the amount of income/expense/net
         $income = Transaction::forUser($userId)->inMonth($month)->income()->sum('amount');
@@ -42,7 +43,21 @@ class DashboardController extends Controller
         $recentTrans = Transaction::with('category')
             ->forUser($userId)
             ->orderBy('date', 'desc')
+            ->orderBy('created_at', 'desc')
             ->limit(5)
+            ->get();
+        
+        // Get expense transactions grouped by category
+        $pieData = Transaction::selectRaw('categories.name, CAST(SUM(transactions.amount) AS DOUBLE) as value')
+            ->join('categories', 'transactions.category_id', '=', 'categories.id')
+            ->where('transactions.user_id', $userId)
+            ->where('categories.type', 'expense')
+            ->whereBetween('date', [
+                $month->copy()->startOfMonth()->toDateString(),
+                $month->copy()->endOfMonth()->toDateString(),
+            ])
+            ->groupBy('category_id')
+            ->orderBy('value', 'desc')
             ->get();
 
         return Inertia::render('Dashboard', [
@@ -51,6 +66,7 @@ class DashboardController extends Controller
             'net' => $net,
             'chartData' => $chartData,
             'recentTrans' => $recentTrans,
+            'pieData' => $pieData,
         ]);
     }
 }

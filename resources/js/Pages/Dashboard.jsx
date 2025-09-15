@@ -4,6 +4,7 @@ import SummaryCard from '@/components/SummaryCard';
 import Chart from '@/components/Chart';
 import Card from '@/components/Card';
 import TransactionTable from '@/components/TransactionTable';
+import CategoryChart from '@/components/CategoryChart';
 
 export default function Dashboard({
   income,
@@ -11,6 +12,7 @@ export default function Dashboard({
   net,
   chartData,
   recentTrans,
+  pieData,
 }) {
   return (
     <AuthenticatedLayout>
@@ -25,11 +27,26 @@ export default function Dashboard({
         {/* Net */}
         <SummaryCard name="Net" amount={net.toFixed(2)} />
       </div>
-      {/* Monthly Combo Chart */}
-      <h2 className="mt-8 text-xl/8 font-bold">Monthly Chart</h2>
-      <Card className="my-4">
-        <Chart data={chartData} />
-      </Card>
+      <div className="flex flex-col md:gap-4 lg:flex-row">
+        {/* Monthly Combo Chart */}
+        <div className="flex-1">
+          <h2 className="mt-8 text-xl/8 font-bold">
+            Monthly Expenses and income
+          </h2>
+          <Card className="my-4">
+            <Chart data={chartData} />
+          </Card>
+        </div>
+        <div className="flex-1">
+          {/* Category Chart */}
+          <h2 className="mt-8 text-xl/8 font-bold">
+            This Month's Expenses by Category
+          </h2>
+          <Card className="my-4">
+            <CategoryChart data={pieData} />
+          </Card>
+        </div>
+      </div>
       {/* Recent Transactions */}
       <h2 className="mt-8 text-xl/8 font-bold">Recent Transactions</h2>
       <Card className="my-4 overflow-x-auto">
