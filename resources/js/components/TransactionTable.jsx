@@ -1,3 +1,5 @@
+import { formatCurrency } from '@/utils/format';
+
 export default function TransactionTable({ transactions }) {
   return (
     <table className="w-full table-fixed border shadow-sm">
@@ -27,7 +29,7 @@ export default function TransactionTable({ transactions }) {
                   (t.type === 'expense' ? 'text-red-400' : 'text-blue-400')
                 }
               >
-                ${t.amount}
+                ${formatCurrency(t.amount)}
               </td>
               <td className="truncate border-l border-slate-200 px-4 py-2">
                 {t.note}

@@ -1,4 +1,5 @@
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
+import { formatCurrency } from '@/utils/format';
 
 const COLORS = [
   '#34d399', // green-400
@@ -24,14 +25,14 @@ export default function CategoryChart({ data }) {
   }));
 
   return (
-    <ResponsiveContainer width="100%" height={500}>
-      <div className="flex flex-row items-center gap-4">
+    <div className="flex gap-4">
+      <ResponsiveContainer width="100%" height={500} className="flex-1">
         <PieChart width={450} height={500} className="flex-1">
           <Pie
             data={data}
             cx="50%"
             cy="50%"
-            outerRadius={180}
+            outerRadius="80%"
             fill="#8884d8"
             dataKey="value"
             startAngle={90}
@@ -45,28 +46,35 @@ export default function CategoryChart({ data }) {
             ))}
           </Pie>
           <text
-            x={225}
-            y={40}
+            x="50%"
+            y="50%"
             textAnchor="middle"
             dominantBaseline="middle"
             className="text-xl font-bold"
-            fill="#475569"
           >
-            {`Total: $${total.toFixed(2)}`}
+            <tspan
+              fill="#475569" // slate-600 背景色
+              stroke="white"
+              strokeWidth="4"
+              paintOrder="stroke"
+            >
+              {`$${formatCurrency(total.toFixed(2))}`}
+            </tspan>
           </text>
         </PieChart>
-        <ul className="flex w-full flex-1 flex-col items-start space-y-2 pl-4 sm:flex-row md:flex-col">
-          {catList.map((entry, index) => (
-            <li
-              key={`label-${entry.name}`}
-              className={`text-[${COLORS[index % COLORS.length]}]`}
-            >
-              {entry.name} - ${entry.value.toFixed(2)} (
-              {entry.percent.toFixed(1)}%)
-            </li>
-          ))}
-        </ul>
-      </div>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+      <ul className="flex w-full flex-1 flex-col items-start justify-center space-y-2 pl-4 md:flex-col">
+        {catList.map((entry, index) => (
+          <li
+            key={`label-${entry.name}`}
+            className={`text-[${COLORS[index % COLORS.length]}]`}
+          >
+            {entry.name} - ${formatCurrency(entry.value.toFixed(2))} (
+            {entry.percent.toFixed(1)}
+            %)
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

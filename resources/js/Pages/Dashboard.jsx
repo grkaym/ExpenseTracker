@@ -21,11 +21,24 @@ export default function Dashboard({
       {/* Summary Cards */}
       <div className="my-4 flex flex-col gap-6 md:flex-row">
         {/* Income */}
-        <SummaryCard name="Total Income" amount={income} />
+        <SummaryCard
+          name="Total Income"
+          amount={income}
+          amountStyle="text-blue-400"
+        />
         {/* Expense */}
-        <SummaryCard name="Total Expense" amount={expense} />
+        <SummaryCard
+          name="Total Expense"
+          amount={expense}
+          amountStyle="text-red-400"
+        />
         {/* Net */}
-        <SummaryCard name="Net" amount={net.toFixed(2)} />
+        <SummaryCard
+          name="Net"
+          amount={net.toFixed(2)}
+          className={net > 0 ? 'bg-blue-50' : 'bg-red-50'}
+          amountStyle={net > 0 ? 'text-blue-400' : 'text-red-400'}
+        />
       </div>
       <div className="flex flex-col md:gap-4 lg:flex-row">
         {/* Monthly Combo Chart */}
