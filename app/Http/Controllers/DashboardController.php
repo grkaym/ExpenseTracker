@@ -6,7 +6,6 @@ use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
-use Illuminate\Database\Query\Builder;
 
 class DashboardController extends Controller
 {
@@ -46,7 +45,7 @@ class DashboardController extends Controller
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
-        
+
         // Get expense transactions grouped by category
         $pieData = Transaction::selectRaw('categories.name, CAST(SUM(transactions.amount) AS DOUBLE) as value')
             ->join('categories', 'transactions.category_id', '=', 'categories.id')
