@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 use Carbon\Carbon;
+use App\Http\Requests\StoreTransactionRequest;
 
 class TransactionController extends Controller
 {
@@ -96,28 +97,22 @@ class TransactionController extends Controller
     /**
      * Store the values entered on the transaction create page.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreTransactionRequest $request): RedirectResponse
     {
-        // Validate and store the input values...
-        $validated = $request->validate([
-            'date' => 'required|date_format:Y-m-d',
-            'category' => 'required|exists:categories,id',
-            'type' => 'required|in:expense,income',
-            'amount' => 'required|decimal:2|min:0|max:9999999999.99',
-            'note' => 'nullable|max:255',
-        ]);
+        // Retrieve the validated input data
+        $data = $request->validated();
 
-        // Insert values into Transaction Model.
+        // Store the transaction
         $t = new Transaction;
         $t->user_id = Auth::id();
-        $t->date = $request->date;
-        $t->category_id = $request->category;
-        $t->type = $request->type;
-        $t->amount = $request->amount;
-        $t->note = $request->note;
+        $t->date = $data['date'];
+        $t->category_id = $data['category'];
+        $t->type = $data['type'];
+        $t->amount = $data['amount'];
+        $t->note = $data['note'];
         $t->save();
 
-        // Redirect to transaction list page.
+        // Redirect to transaction list page
         return to_route('transactions.index');
     }
 }
