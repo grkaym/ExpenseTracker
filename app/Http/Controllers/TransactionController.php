@@ -35,8 +35,8 @@ class TransactionController extends Controller
             ->get();
 
         $filters = [
-            'from' => $fFrom ?? Carbon::now()->subYear(),
-            'to' => $fTo ?? Carbon::now(),
+            'from' => $fFrom ?? Carbon::now()->subYear()->format('Y-m-d'),
+            'to' => $fTo ?? Carbon::now()->format('Y-m-d'),
             'category' => $fCat ?? 'all',
             'type' => $fType ?? 'both',
             'sort' => $fSort ?? 'newest',
