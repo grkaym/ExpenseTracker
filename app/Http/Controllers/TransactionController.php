@@ -22,12 +22,6 @@ class TransactionController extends Controller
     {
         // Get login user's id
         $userId = Auth::id();
-        // Get filters
-        $fFrom = $request->query('from');
-        $fTo = $request->query('to');
-        $fCat = $request->query('category');
-        $fType = $request->query('type');
-        $fSort = $request->query('sort');
 
         // Get categories for the login user
         $categories = Category::forUser($userId)
@@ -35,11 +29,11 @@ class TransactionController extends Controller
             ->get();
 
         $filters = [
-            'from' => $fFrom ?? Carbon::now()->subYear()->format('Y-m-d'),
-            'to' => $fTo ?? Carbon::now()->format('Y-m-d'),
-            'category' => $fCat ?? 'all',
-            'type' => $fType ?? 'both',
-            'sort' => $fSort ?? 'newest',
+            'from' => $request->query('from') ?? Carbon::now()->subYear()->format('Y-m-d'),
+            'to' => $request->query('to') ?? Carbon::now()->format('Y-m-d'),
+            'category' => $request->query('category') ?? 'all',
+            'type' => $request->query('type') ?? 'both',
+            'sort' => $request->query('sort') ?? 'newest',
         ];
 
         // Get filtered transactions
