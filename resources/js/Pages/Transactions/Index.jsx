@@ -25,7 +25,6 @@ export default function Index({ transactions, categories }) {
     category: 'all',
     sort: 'newest',
   };
-  console.log(initial);
 
   // Set transaction types
   const transactionType = useMemo(
