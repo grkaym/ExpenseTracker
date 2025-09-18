@@ -36,7 +36,7 @@ export default function Dashboard({
         <SummaryCard
           name="Net"
           amount={net.toFixed(2)}
-          className={net > 0 ? 'bg-blue-50' : 'bg-red-50'}
+          className={net > 0 ? '!bg-blue-50' : '!bg-red-50'}
           amountStyle={net > 0 ? 'text-blue-400' : 'text-red-400'}
         />
       </div>

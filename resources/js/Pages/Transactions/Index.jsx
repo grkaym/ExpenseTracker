@@ -4,13 +4,23 @@ import Card from '@/components/Card';
 import SelectBox from '@/components/SelectBox';
 import Button from '@/components/Button';
 import Field from '@/components/Field';
+import DatePicker from '@/components/DatePicker';
 import { useMemo, useCallback, useState } from 'react';
 import TransactionTable from '@/components/TransactionTable';
+import { isValid } from 'date-fns';
+import { toYMD } from '@/utils/format';
 
 export default function Index({ transactions, categories }) {
   // Get shared props
   const { props } = usePage();
+
+  // Get a year ago date
+  const d = new Date();
+  d.setFullYear(d.getFullYear() - 1);
+
   const initial = props.filters ?? {
+    from: toYMD(d),
+    to: toYMD(new Date()),
     type: 'both',
     category: 'all',
     sort: 'newest',
@@ -49,6 +59,20 @@ export default function Index({ transactions, categories }) {
   const [filters, setFilters] = useState(initial);
 
   // Set state on change
+  const onFromChange = useCallback((v) => {
+    setFilters((prev) => {
+      const next = { ...prev, from: toYMD(v) };
+      router.get(route('transactions.index'), next);
+      return next;
+    });
+  });
+  const onToChange = useCallback((v) => {
+    setFilters((prev) => {
+      const next = { ...prev, to: toYMD(v) };
+      router.get(route('transactions.index'), next);
+      return next;
+    });
+  });
   const onCategoryChange = useCallback((v) => {
     setFilters((prev) => {
       const next = { ...prev, category: String(v) };
@@ -80,7 +104,43 @@ export default function Index({ transactions, categories }) {
           <Button text="+ Add Transaction" />
         </Link>
       </div>
-      <Card className="mt-4">
+      <Card className="mt-4 space-y-4">
+        <div className="flex flex-col items-start justify-between gap-2 md:flex-row">
+          <Field
+            label="Date From"
+            className="w-full"
+            htmlFor="dateFrom"
+            id="dateFromField"
+          >
+            <DatePicker
+              className="w-full"
+              value={
+                isValid(new Date(filters.from)) ? new Date(filters.from) : d
+              }
+              id="dateFrom"
+              portalId="dateFromField"
+              onChange={onFromChange}
+            />
+          </Field>
+          <Field
+            label="Date To"
+            className="w-full"
+            htmlFor="dateTo"
+            id="dateToField"
+          >
+            <DatePicker
+              className="w-full"
+              value={
+                isValid(new Date(filters.to))
+                  ? new Date(filters.to)
+                  : new Date()
+              }
+              id="dateTo"
+              portalId="dateToField"
+              onChange={onToChange}
+            />
+          </Field>
+        </div>
         <div className="flex flex-col justify-between gap-2 md:flex-row">
           <Field label="Category" className="w-full">
             <SelectBox

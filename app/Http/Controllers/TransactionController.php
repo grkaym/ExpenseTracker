@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -21,6 +22,8 @@ class TransactionController extends Controller
         // Get login user's id
         $userId = Auth::id();
         // Get filters
+        $fFrom = $request->query('from');
+        $fTo = $request->query('to');
         $fCat = $request->query('category');
         $fType = $request->query('type');
         $fSort = $request->query('sort');
@@ -31,6 +34,8 @@ class TransactionController extends Controller
             ->get();
 
         $filters = [
+            'from' => $fFrom ?? Carbon::now()->subYear(),
+            'to' => $fTo ?? Carbon::now(),
             'category' => $fCat ?? 'all',
             'type' => $fType ?? 'both',
             'sort' => $fSort ?? 'newest',
@@ -39,6 +44,12 @@ class TransactionController extends Controller
         // Get filtered transactions
         $transactions = Transaction::with('category')
             ->forUser($userId)
+            ->when(($filters['from'] !== ''), function (Builder $q) use ($filters) {
+                $q->where('date', '>=', $filters['from']);
+            })
+            ->when($filters['to'] !== '', function (Builder $q) use ($filters) {
+                $q->where('date', '<=', $filters['to']);
+            })
             ->when(($filters['category'] !== 'all'), function (Builder $q) use ($fCat) {
                 // Filter category
                 // Remove this condition if category is filtered

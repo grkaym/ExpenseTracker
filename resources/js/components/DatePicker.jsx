@@ -2,7 +2,13 @@ import { useEffect, useState, memo } from 'react';
 import Datepicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-function DatePickerImpl({ id, value = '', onChange, className = '' }) {
+function DatePickerImpl({
+  id,
+  value = '',
+  onChange,
+  className = '',
+  portalId = '',
+}) {
   // Get state of the Date value
   const [selectedDate, setSelectedDate] = useState(value ?? null);
 
@@ -25,6 +31,7 @@ function DatePickerImpl({ id, value = '', onChange, className = '' }) {
       }
       id={id}
       wrapperClassName="w-full"
+      portalId={portalId}
     />
   );
 }
