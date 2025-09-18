@@ -23,22 +23,32 @@ class TransactionController extends Controller
         // Get login user's id
         $userId = Auth::id();
 
-        // Get categories for the login user
+        // Categories available for this user (ordered by type)
         $categories = Category::forUser($userId)
             ->orderBy('type')
             ->get();
 
+        // Current date used as baseline for filters
+        $today = Carbon::now();
+
+        // Build filter from query parameters (with sensible defaults)
         $filters = [
-            'from' => $request->query('from') ?? Carbon::now()->subYear()->format('Y-m-d'),
-            'to' => $request->query('to') ?? Carbon::now()->format('Y-m-d'),
+            // Default: one year ago if no "from" date provided
+            'from' => $request->query('from') ?? $today->copy()->subYear()->format('Y-m-d'),
+            // Default: today if no "to" date provided
+            'to' => $request->query('to') ?? $today->format('Y-m-d'),
+            // Default: all categories
             'category' => $request->query('category') ?? 'all',
+            // Default: both income and expense
             'type' => $request->query('type') ?? 'both',
+            // Default: newest transactions first
             'sort' => $request->query('sort') ?? 'newest',
         ];
 
         // Get filtered transactions
         $transactions = Transaction::with('category')
             ->forUser($userId)
+            // Filter only transactions that meet the conditions
             ->filter($filters)
             ->get();
 
