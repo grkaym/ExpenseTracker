@@ -66,6 +66,67 @@ class Transaction extends Model
     }
 
     /**
+     * Scope a query to filter date from
+     */
+    public function scopeFromDate(Builder $query, ?string $from): Builder
+    {
+        return $from !== null && $from !== ''
+            ? $query->where('date', '>=', $from)
+            : $query;
+    }
+
+    /**
+     * Scope a query to filter date to
+     */
+    public function scopeToDate(Builder $query, ?string $to): Builder
+    {
+        return $to !== null && $to !== ''
+            ? $query->where('date', '<=', $to)
+            : $query;
+    }
+
+    /**
+     * Scope a query to filter category
+     */
+    public function scopeCategory(Builder $query, ?string $category): Builder
+    {
+        return ($category && $category !== 'all')
+            ? $query->where('category_id', $category)
+            : $query;
+    }
+
+    /**
+     * Scope a query to filter type
+     */
+    public function scopeType(Builder $query, ?string $type): Builder
+    {
+        return ($type && $type !== 'both')
+            ? $query->where('type', $type)
+            : $query;
+    }
+
+    /**
+     * Scope a query to sort by date
+     */
+    public function scopeSortByDate(Builder $query, ?string $sort = 'newest'): Builder
+    {
+        $query->orderBy('date', $sort === 'newest' ? 'desc' : 'asc');
+        return $query->orderBy('created_at', $sort === 'newest' ? 'desc' : 'asc');
+    }
+
+    /**
+     * Scope a query to filter at once
+     */
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        return $query->fromDate($filters['from'] ?? null)
+            ->toDate($filters['to'] ?? null)
+            ->category($filters['category'] ?? null)
+            ->type($filters['type'] ?? null)
+            ->sortByDate($filters['sort'] ?? 'newest');
+    }
+
+    /**
      * Scope a query to only include specific month.
      */
     public function scopeInMonth(Builder $query, Carbon $month): Builder

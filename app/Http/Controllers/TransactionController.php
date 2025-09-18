@@ -45,30 +45,7 @@ class TransactionController extends Controller
         // Get filtered transactions
         $transactions = Transaction::with('category')
             ->forUser($userId)
-            ->when(($filters['from'] !== ''), function (Builder $q) use ($filters) {
-                $q->where('date', '>=', $filters['from']);
-            })
-            ->when($filters['to'] !== '', function (Builder $q) use ($filters) {
-                $q->where('date', '<=', $filters['to']);
-            })
-            ->when(($filters['category'] !== 'all'), function (Builder $q) use ($fCat) {
-                // Filter category
-                // Remove this condition if category is filtered
-                $q->where('category_id', $fCat);
-            })
-            ->when(($filters['type'] !== 'both'), function (Builder $q) use ($fType) {
-                // Filter type
-                // Remove this condition if type is filtered
-                $q->where('type', $fType);
-            })
-            ->when(($filters['sort'] === 'newest'), function (Builder $q) {
-                // sort (newest)
-                $q->orderBy('date', 'desc');
-            }, function (Builder $q) {
-                // sort (oldest)
-                $q->orderBy('date', 'asc');
-            })
-            ->orderBy('created_at', 'desc')
+            ->filter($filters)
             ->get();
 
         return Inertia::render('Transactions/Index', [
