@@ -44,7 +44,7 @@ export default function Dashboard({
         {/* Monthly Combo Chart */}
         <div className="flex-1">
           <h2 className="mt-8 text-xl/8 font-bold">
-            Monthly Expenses and income
+            Monthly Expenses and Income
           </h2>
           <Card className="my-4">
             <Chart data={chartData} />
