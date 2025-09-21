@@ -35,6 +35,12 @@ export default function AuthenticatedLayout({ header, children }) {
                 >
                   Transactions
                 </NavLink>
+                <NavLink
+                  href={route('recurring.index')}
+                  active={route().current('recurring.*')}
+                >
+                  Recurring Rules
+                </NavLink>
               </div>
             </div>
 

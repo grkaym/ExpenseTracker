@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\RecurringRuleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,16 +29,23 @@ Route::controller(DemoController::class)
 
 // Auth
 Route::middleware('auth')->group(function () {
-    // dashboard
+    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    // transactions
+    // Transactions
     Route::controller(TransactionController::class)
         ->prefix('transactions')
         ->name('transactions.')
         ->group(function () {
-            Route::get('/index', 'index')->name('index');
+            Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/store', 'store')->name('store');
+        });
+    // Recurring Rule
+    Route::controller(RecurringRuleController::class)
+        ->prefix('recurring')
+        ->name('recurring.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
         });
 });
 
