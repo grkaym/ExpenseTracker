@@ -2,13 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreRecurringRuleRequest;
 use Inertia\Inertia;
+use App\Models\RecurringTransaction;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Response;
+use Carbon\Carbon;
 
 class RecurringRuleController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
-        return Inertia::render('Recurring/Index');
+        // Get login user's id
+        $userId = Auth::id();
+
+        // Get recurring transaction rules for the login user with categories
+        $recurringRules = RecurringTransaction::with('category')
+            ->forUser($userId)
+            ->get();
+
+        return Inertia::render('Recurring/Index', [
+            'recurringRules' => $recurringRules,
+
+        ]);
+    }
+
+    public function create(): Response
+    {
+        // Get login user's id
+        $userId = Auth::id();
+
+        // Get category List
+        $categories = Category::forUser($userId)
+            ->get();
+
+        return Inertia::render('Recurring/Create', [
+            'categories' => $categories,
+        ]);
+    }
+
+    public function store(StoreRecurringRuleRequest $request): RedirectResponse
+    {
+        // Retrieve the validated input data
+        $data = $request->validated();
+        
+        // Calculate next run date
+        $nextRunDate = Carbon::parse($data['startDate']);
+        $frequency = $data['frequency'];
+        switch($frequency) {
+            case 'daily': $nextRunDate->addDay(); break;
+            case 'weekly': $nextRunDate->addWeek(); break;
+            case 'monthly': $nextRunDate->addMonth(); break;
+            default: $nextRunDate;
+        }
+
+        // Store the recurring rule
+        $r = new RecurringTransaction;
+        $r->user_id = Auth::id();
+        $r->category_id = $data['category'];
+        $r->type = $data['type'];
+        $r->amount = $data['amount'];
+        $r->note = $data['note'];
+        $r->start_date = $data['startDate'];
+        $r->frequency = $frequency;
+        $r->next_run_date = $nextRunDate;
+        $r->save();
+
+        return to_route('recurring.index');
     }
 }

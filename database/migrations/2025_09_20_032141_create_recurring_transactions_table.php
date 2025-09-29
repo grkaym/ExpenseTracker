@@ -22,9 +22,7 @@ return new class extends Migration
 
             // Recurring settings
             $table->date('start_date');
-            $table->date('end_date')->nullable();
             $table->enum('frequency', ['daily', 'weekly', 'monthly']);
-            $table->unsignedTinyInteger('weekday')->nullable();
             $table->string('timezone', 64)->default(config('app.timezone', 'Asia/Tokyo'));
             $table->enum('status', ['active', 'paused'])->default('active');
 

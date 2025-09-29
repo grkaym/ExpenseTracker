@@ -1,20 +1,31 @@
 import Card from '@/components/Card';
-export default function RecurringRuleCard() {
+import { formatCurrency, toYMD } from '@/utils/format';
+
+export default function RecurringRuleCard({ data }) {
   return (
-    <Card>
+    <Card className="max-w-xl">
       <div className="flex justify-between">
-        <p className="text-xl font-bold">Rent</p>
+        <p className="text-xl font-bold">{data.category.name}</p>
         <div className="flex gap-4">
-          <div>expense</div>
-          <div>active</div>
+          {/* transaction type */}
+          <div>{data.type}</div>
+          {/* recurring status (active or paused) */}
+          <div>{data.status}</div>
         </div>
       </div>
       <div>
-        <div>Amount: $1,000.00</div>
-        <div>Schedule: Daily</div>
-        <div>Start: 2025/09/01</div>
-        <div>End: 2025/10/30</div>
-        <div>Next: 2025/09/21</div>
+        {/* amount */}
+        <div>Amount: ${formatCurrency(data.amount)}</div>
+        {/* frequency */}
+        <div>Schedule: {data.frequency}</div>
+        {/* recurring start date */}
+        <div>Start: {toYMD(data.start_date)}</div>
+        {/* recurring end date (if exists) */}
+        {data.end_date && <div>End: {toYMD(data.end_date)}</div>}
+        {/* next run data */}
+        <div>Next: {toYMD(data.next_run_date)}</div>
+        {/* note (if exists) */}
+        {data.note && <div>Note: {data.note}</div>}
       </div>
     </Card>
   );

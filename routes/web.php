@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
         ->name('recurring.')
         ->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
         });
 });
 

@@ -40,6 +40,14 @@ class Category extends Model
     }
 
     /**
+     * relationship for RecurringTransaction model
+     */
+    public function recurringTransactions(): HasMany
+    {
+        return $this->hasMany(RecurringTransaction::class);
+    }
+
+    /**
      * Scope a query to only include specific type.
      */
     public function scopeType(Builder $query, string $type): Builder

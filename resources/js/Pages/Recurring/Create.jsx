@@ -1,13 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { useMemo, useCallback } from 'react';
 import { Head, useForm } from '@inertiajs/react';
 import Card from '@/components/Card';
 import Field from '@/components/Field';
-import AmountInput from '@/components/AmountInput';
 import DatePicker from '@/components/DatePicker';
 import SelectBox from '@/components/SelectBox';
-import Button from '@/components/Button';
+import { useMemo, useCallback } from 'react';
+import AmountInput from '@/components/AmountInput';
 import TextArea from '@/components/TextArea';
+import Button from '@/components/Button';
 import { format, parseISO } from 'date-fns';
 
 export default function Create({ categories }) {
@@ -27,11 +27,12 @@ export default function Create({ categories }) {
 
   // Get useForm to control forms.
   const { data, setData, post, processing, errors } = useForm({
-    date: today,
     category: '',
     type: '',
     amount: '',
     note: '',
+    startDate: today,
+    frequency: 'daily',
   });
 
   // Cache to prevent unnecessary rendering component.
@@ -48,33 +49,32 @@ export default function Create({ categories }) {
     [setData]
   );
 
-  const onDateChange = useCallback(
-    (d) => setData('date', format(d, 'yyyy-MM-dd')),
+  const dateObj = useMemo(() => parseISO(data.startDate), [data.startDate]);
+  const onStartDateChange = useCallback(
+    (d) => setData('startDate', format(d, 'yyyy-MM-dd')),
     [setData]
   );
-  const dateObj = useMemo(() => parseISO(data.date), [data.date]);
+
+  const onFrequencyChange = useCallback(
+    (v) => {
+      // Update category
+      setData('frequency', v);
+    },
+    [setData]
+  );
 
   // submit event
   function submit(e) {
     e.preventDefault();
-    post(route('transactions.store'));
+    post(route('recurring.store'));
   }
 
   return (
     <AuthenticatedLayout>
-      <Head title="Add Transaction" />
-      <h2 className="text-xl/8 font-bold">Add Transaction</h2>
+      <Head title="Add Recurring Rule" />
+      <h2 className="text-xl/8 font-bold">Add Recurring Rule</h2>
       <Card className="mt-4">
         <form onSubmit={submit} className="space-y-6">
-          {/* Date field */}
-          <Field htmlFor="date" label="Date" error={errors.date}>
-            <DatePicker
-              id="date"
-              value={dateObj}
-              onChange={onDateChange}
-              className="w-full"
-            />
-          </Field>
           {/* Category field */}
           <Field htmlFor="category" label="Category" error={errors.category}>
             <SelectBox
@@ -98,7 +98,7 @@ export default function Create({ categories }) {
               </div>
             )}
           </Field>
-          {/* Amound field */}
+          {/* Amount field */}
           <Field htmlFor="amount" label="Amount" error={errors.amount}>
             <AmountInput
               id="amount"
@@ -114,6 +114,34 @@ export default function Create({ categories }) {
               value={data.note}
               onChange={(v) => setData('note', v)}
               className="w-full"
+            />
+          </Field>
+          {/* Start date field */}
+          <Field
+            htmlFor="startDate"
+            label="Start Date"
+            error={errors.startDate}
+          >
+            <DatePicker
+              id="startDate"
+              value={dateObj}
+              onChange={onStartDateChange}
+              className="w-full"
+            />
+          </Field>
+          {/* Frequency field */}
+          <Field htmlFor="frequency" label="Frequency" error={errors.category}>
+            <SelectBox
+              optionArray={[
+                { label: 'daily', value: 'daily' },
+                { label: 'weekly', value: 'weekly' },
+                { label: 'monthly', value: 'monthly' },
+              ]}
+              id="frequency"
+              value={data.frequency}
+              onChange={onFrequencyChange}
+              className="flex w-full"
+              defaultValue="daily"
             />
           </Field>
           {/* Submit button */}
