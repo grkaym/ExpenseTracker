@@ -111,6 +111,7 @@ class Transaction extends Model
     public function scopeSortByDate(Builder $query, ?string $sort = 'newest'): Builder
     {
         $query->orderBy('date', $sort === 'newest' ? 'desc' : 'asc');
+
         return $query->orderBy('created_at', $sort === 'newest' ? 'desc' : 'asc');
     }
 

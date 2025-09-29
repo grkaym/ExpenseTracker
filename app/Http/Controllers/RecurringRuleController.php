@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRecurringRuleRequest;
-use Inertia\Inertia;
-use App\Models\RecurringTransaction;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
-use Illuminate\Http\RedirectResponse;
-use Inertia\Response;
+use App\Models\RecurringTransaction;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class RecurringRuleController extends Controller
 {
@@ -47,14 +47,17 @@ class RecurringRuleController extends Controller
     {
         // Retrieve the validated input data
         $data = $request->validated();
-        
+
         // Calculate next run date
         $nextRunDate = Carbon::parse($data['startDate']);
         $frequency = $data['frequency'];
-        switch($frequency) {
-            case 'daily': $nextRunDate->addDay(); break;
-            case 'weekly': $nextRunDate->addWeek(); break;
-            case 'monthly': $nextRunDate->addMonth(); break;
+        switch ($frequency) {
+            case 'daily': $nextRunDate->addDay();
+                break;
+            case 'weekly': $nextRunDate->addWeek();
+                break;
+            case 'monthly': $nextRunDate->addMonth();
+                break;
             default: $nextRunDate;
         }
 

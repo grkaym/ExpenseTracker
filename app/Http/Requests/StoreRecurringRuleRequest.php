@@ -27,7 +27,7 @@ class StoreRecurringRuleRequest extends FormRequest
             'amount' => 'required|decimal:2|min:0|max:9999999999.99',
             'note' => 'nullable|max:255',
             'startDate' => 'required|date_format:Y-m-d',
-            'frequency' => 'required|in:daily,weekly,monthly,'
+            'frequency' => 'required|in:daily,weekly,monthly,',
         ];
     }
 }

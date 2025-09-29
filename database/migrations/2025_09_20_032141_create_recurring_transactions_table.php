@@ -34,7 +34,7 @@ return new class extends Migration
         });
 
         // Link transactions to the recurring from which they were generated
-        Schema::table('transactions', function(BluePrint $table) {
+        Schema::table('transactions', function (BluePrint $table) {
             $table->foreignId('recurring_id')
                 ->nullable()
                 ->constrained('recurring_transactions')
