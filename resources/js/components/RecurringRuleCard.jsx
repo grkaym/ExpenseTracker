@@ -1,31 +1,63 @@
 import Card from '@/components/Card';
-import { formatCurrency, toYMD } from '@/utils/format';
+import { formatCurrency, toYMD, toDateString } from '@/utils/format';
 
 export default function RecurringRuleCard({ data }) {
   return (
     <Card className="max-w-xl">
-      <div className="flex justify-between">
-        <p className="text-xl font-bold">{data.category.name}</p>
+      <div className="flex items-center justify-between">
         <div className="flex gap-4">
+          <p className="text-xl font-bold">{data.category.name}</p>
           {/* transaction type */}
-          <div>{data.type}</div>
-          {/* recurring status (active or paused) */}
-          <div>{data.status}</div>
+          <div>
+            <span className="text-sm text-gray-400">{data.type}</span>
+          </div>
+        </div>
+        {/* amount */}
+        <div>
+          <span
+            className={
+              data.type === 'expense' ? 'text-red-400' : 'text-blue-400'
+            }
+          >
+            ${formatCurrency(data.amount)}
+          </span>
         </div>
       </div>
-      <div>
-        {/* amount */}
-        <div>Amount: ${formatCurrency(data.amount)}</div>
+      <hr className="mb-2 mt-4" />
+      <div className="space-y-2">
+        {/* recurring status (active or paused) */}
+        <div className="flex justify-between">
+          <div className="text-gray-400">Status</div>
+          <div className="ml-4 font-bold">
+            <span
+              className={
+                `rounded-full px-3 py-1 ` +
+                (data.status === 'active'
+                  ? 'bg-amber-100 text-amber-600'
+                  : 'bg-gray-100 text-gray-500')
+              }
+            >
+              {data.status}
+            </span>
+          </div>
+        </div>
         {/* frequency */}
-        <div>Schedule: {data.frequency}</div>
+        <div className="flex justify-between leading-5">
+          <div className="text-gray-400">Schedule</div>
+          <div className="ml-4 font-bold">{data.frequency}</div>
+        </div>
         {/* recurring start date */}
-        <div>Start: {toYMD(data.start_date)}</div>
-        {/* recurring end date (if exists) */}
-        {data.end_date && <div>End: {toYMD(data.end_date)}</div>}
-        {/* next run data */}
-        <div>Next: {toYMD(data.next_run_date)}</div>
+        <div className="flex justify-between leading-5">
+          <div className="text-gray-400">Start</div>
+          <div className="ml-4 font-bold">{toDateString(data.start_date)}</div>
+        </div>
         {/* note (if exists) */}
-        {data.note && <div>Note: {data.note}</div>}
+        {data.note && (
+          <div className="leading-5">
+            <div className="text-gray-400">Note</div>
+            <div className="ml-4 italic">{data.note}</div>
+          </div>
+        )}
       </div>
     </Card>
   );

@@ -21,6 +21,7 @@ class RecurringRuleController extends Controller
         // Get recurring transaction rules for the login user with categories
         $recurringRules = RecurringTransaction::with('category')
             ->forUser($userId)
+            ->orderBy('status', 'asc')
             ->get();
 
         return Inertia::render('Recurring/Index', [

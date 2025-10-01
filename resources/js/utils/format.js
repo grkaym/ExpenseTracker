@@ -13,3 +13,14 @@ export function formatCurrency(value) {
 export function toYMD(d) {
   return format(d, 'yyyy-MM-dd');
 }
+
+// Format date to DateString
+export function toDateString(d) {
+  const date = d instanceof Date ? d : new Date(d);
+
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: '2-digit',
+    year: 'numeric',
+  }).format(date);
+}
