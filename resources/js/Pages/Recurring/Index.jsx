@@ -12,7 +12,7 @@ export default function Index({ recurringRules }) {
           <Button text="+ Add Recurring Rule" />
         </Link>
       </div>
-      <div className="mt-4 space-y-4">
+      <div className="mt-4 gap-4 space-y-4 lg:grid lg:grid-cols-3 lg:space-y-0">
         {recurringRules.map((recurringRule, index) => {
           return <RecurringRuleCard data={recurringRule} key={index} />;
         })}

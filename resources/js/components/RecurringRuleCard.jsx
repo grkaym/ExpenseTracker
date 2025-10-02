@@ -55,7 +55,7 @@ export default function RecurringRuleCard({ data }) {
         {data.note && (
           <div className="leading-5">
             <div className="text-gray-400">Note</div>
-            <div className="ml-4 italic">{data.note}</div>
+            <div className="ml-4 truncate italic">{data.note}</div>
           </div>
         )}
       </div>
