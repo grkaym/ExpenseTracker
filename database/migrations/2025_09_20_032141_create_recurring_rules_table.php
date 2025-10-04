@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('recurring_transactions', function (Blueprint $table) {
+        Schema::create('recurring_rules', function (Blueprint $table) {
             $table->id();
             // Transaction data
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
@@ -37,7 +37,7 @@ return new class extends Migration
         Schema::table('transactions', function (BluePrint $table) {
             $table->foreignId('recurring_id')
                 ->nullable()
-                ->constrained('recurring_transactions')
+                ->constrained('recurring_rules')
                 ->nullOnDelete();
             // Avoid duplicate transactions
             $table->unique(['recurring_id', 'date']);
@@ -49,6 +49,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('recurring_transactions');
+        Schema::dropIfExists('recurring_rules');
     }
 };

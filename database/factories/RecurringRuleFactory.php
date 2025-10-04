@@ -7,9 +7,9 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RecurringTransaction>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RecurringRule>
  */
-class RecurringTransactionFactory extends Factory
+class RecurringRuleFactory extends Factory
 {
     /**
      * Define the model's default state.

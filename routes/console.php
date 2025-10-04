@@ -3,6 +3,7 @@
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schedule;
+use App\Actions\ProcessRecurringRule;
 
 // Delete demo user and demo data
 Schedule::call(function () {
@@ -14,3 +15,6 @@ Schedule::call(function () {
         ->delete();
 
 })->hourly();
+
+// Regist recurring transactions
+Schedule::call(new ProcessRecurringRule)->everyMinute();

@@ -7,14 +7,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class RecurringTransaction extends Model
+class RecurringRule extends Model
 {
     use HasFactory;
 
     /**
+     * Get the attributes that should be cast
+     * 
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'next_run_date' => 'datetime:Y-m-d',
+        ];
+    }
+
+    /**
      * relationship for User model
      */
-    public function users(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -33,5 +45,16 @@ class RecurringTransaction extends Model
     public function scopeForUser(Builder $query, int $userId): Builder
     {
         return $query->where('user_id', $userId);
+    }
+
+    /**
+     * Scope a query not to include demo user's recurring transaction
+     */
+    public function scopeNonDemoUser(Builder $query): Builder
+    {
+        return $query->whereHas('user', function(Builder $q) {
+            $q->where('is_demo', false)
+                ->orWhereNull('is_demo');
+        });
     }
 }

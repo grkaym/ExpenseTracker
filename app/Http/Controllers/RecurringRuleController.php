@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRecurringRuleRequest;
 use App\Models\Category;
-use App\Models\RecurringTransaction;
+use App\Models\RecurringRule;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +19,7 @@ class RecurringRuleController extends Controller
         $userId = Auth::id();
 
         // Get recurring transaction rules for the login user with categories
-        $recurringRules = RecurringTransaction::with('category')
+        $recurringRules = RecurringRule::with('category')
             ->forUser($userId)
             ->orderBy('status', 'asc')
             ->get();
@@ -63,7 +63,7 @@ class RecurringRuleController extends Controller
         }
 
         // Store the recurring rule
-        $r = new RecurringTransaction;
+        $r = new RecurringRule;
         $r->user_id = Auth::id();
         $r->category_id = $data['category'];
         $r->type = $data['type'];

@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategoriesSeeder::class,
             TransactionsSeeder::class,
-            RecurringTransactionsSeeder::class,
+            RecurringRulesSeeder::class,
         ]);
     }
 }

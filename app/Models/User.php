@@ -63,4 +63,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Category::class);
     }
+
+    /**
+     * relationship for RecurringRule model
+     */
+    public function recurringRules(): HasMany
+    {
+        return $this->hasMany(RecurringRule::class);
+    }
 }

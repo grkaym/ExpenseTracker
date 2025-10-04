@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\RecurringTransaction;
+use App\Models\RecurringRule;
 use Illuminate\Database\Seeder;
 
-class RecurringTransactionsSeeder extends Seeder
+class RecurringRulesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        RecurringTransaction::factory()->create(['user_id' => 1]);
+        RecurringRule::factory()->create(['user_id' => 1]);
     }
 }

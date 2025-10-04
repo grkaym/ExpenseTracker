@@ -40,11 +40,11 @@ class Category extends Model
     }
 
     /**
-     * relationship for RecurringTransaction model
+     * relationship for RecurringRule model
      */
-    public function recurringTransactions(): HasMany
+    public function recurringRules(): HasMany
     {
-        return $this->hasMany(RecurringTransaction::class);
+        return $this->hasMany(RecurringRule::class);
     }
 
     /**
