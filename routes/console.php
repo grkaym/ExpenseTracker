@@ -17,4 +17,4 @@ Schedule::call(function () {
 })->hourly();
 
 // Regist recurring transactions
-Schedule::call(new ProcessRecurringRule)->everyMinute();
+Schedule::call(new ProcessRecurringRule)->daily();
