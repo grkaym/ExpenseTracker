@@ -11,9 +11,11 @@ This project was created as a **portfolio piece** to demonstrate full-stack deve
   - Create new transaction (expense / income)
 - Dashboard with summary cards & charts (Recharts)
 - Demo mode (auto-login as demo user)
+- Recurring Transaction (scheduler-based)
 
 ### Planned (Future Work)
-- CSV export
+- CSV export (server-side)
+- Monthly email summary (queued)
 - Multi-currency support
 
 ## Tech Stack
@@ -27,3 +29,4 @@ This project was created as a **portfolio piece** to demonstrate full-stack deve
 ## Demo Login
 - Click the **"TRY DEMO"** button on the login screen.
 - A temporary demo user will be created automatically.
+- Demo data resets periodically.
