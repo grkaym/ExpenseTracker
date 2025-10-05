@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Actions;
 
 use App\Models\RecurringRule;
 use App\Models\Transaction;
 use Carbon\Carbon;
 
-class ProcessRecurringRule {
+class ProcessRecurringRule
+{
     public function __invoke()
     {
         // Get all user's recurring rules except for demo user's one
@@ -14,14 +16,14 @@ class ProcessRecurringRule {
         // Current date
         $currentDate = Carbon::now();
 
-        foreach($allRecurringRules as $r) {
+        foreach ($allRecurringRules as $r) {
             // $next_run_date is cast to the datetime type (Carbon)
             $nextRunDate = $r->next_run_date;
 
             // Compare the current date with next_run_date
-            if($currentDate >= $nextRunDate) {
+            if ($currentDate >= $nextRunDate) {
                 // Create transactions when next_run_date is due
-                $t = new Transaction();
+                $t = new Transaction;
                 $t->user_id = $r->user_id;
                 $t->category_id = $r->category_id;
                 $t->date = $currentDate;

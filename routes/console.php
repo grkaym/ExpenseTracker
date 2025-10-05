@@ -1,9 +1,9 @@
 <?php
 
+use App\Actions\ProcessRecurringRule;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schedule;
-use App\Actions\ProcessRecurringRule;
 
 // Delete demo user and demo data
 Schedule::call(function () {

@@ -13,7 +13,7 @@ class RecurringRule extends Model
 
     /**
      * Get the attributes that should be cast
-     * 
+     *
      * @return array<string, string>
      */
     protected function casts(): array
@@ -52,7 +52,7 @@ class RecurringRule extends Model
      */
     public function scopeNonDemoUser(Builder $query): Builder
     {
-        return $query->whereHas('user', function(Builder $q) {
+        return $query->whereHas('user', function (Builder $q) {
             $q->where('is_demo', false)
                 ->orWhereNull('is_demo');
         });
