@@ -20,10 +20,10 @@ export default function AuthenticatedLayout({ header, children }) {
           <div className="flex h-16 justify-between">
             <div className="flex">
               <div className="flex shrink-0 items-center font-bold">
-                <Link href="/">Expense Tracker</Link>
+                <a href="/">Expense Tracker</a>
               </div>
 
-              <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+              <div className="hidden space-x-8 md:-my-px md:ms-10 md:flex">
                 <NavLink
                   href={route('dashboard')}
                   active={route().current('dashboard')}
@@ -45,11 +45,11 @@ export default function AuthenticatedLayout({ header, children }) {
               </div>
             </div>
 
-            <div className="hidden sm:ms-6 sm:flex sm:items-center">
+            <div className="hidden md:ms-6 md:flex md:items-center">
               {isDemo && (
                 <a
                   href={route('demo.register')}
-                  className="ml-4 inline-flex items-center gap-2 rounded-md bg-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-amber-600"
+                  className="inline-flex items-center gap-2 rounded-md bg-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-amber-600"
                 >
                   <Rocket className="h-4 w-4" />
                   Create account
@@ -99,7 +99,7 @@ export default function AuthenticatedLayout({ header, children }) {
               </div>
             </div>
 
-            <div className="-me-2 flex items-center sm:hidden">
+            <div className="-me-2 flex items-center md:hidden">
               <button
                 onClick={() =>
                   setShowingNavigationDropdown(
@@ -178,6 +178,18 @@ export default function AuthenticatedLayout({ header, children }) {
               {/* <ResponsiveNavLink href={route('profile.edit')}>
                 Profile
               </ResponsiveNavLink> */}
+              {isDemo && (
+                <ResponsiveNavLink
+                  method="get"
+                  href={route('demo.register')}
+                  as="button"
+                >
+                  <div className="inline-flex items-center gap-2 text-amber-500">
+                    <Rocket className="h-4 w-4" />
+                    Create account
+                  </div>
+                </ResponsiveNavLink>
+              )}
               <ResponsiveNavLink
                 method="post"
                 href={route('logout')}
