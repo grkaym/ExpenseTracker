@@ -84,7 +84,7 @@ export default function Landing() {
                 href="/register"
                 className="inline-flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2 text-sm hover:bg-gray-50"
               >
-                <Rocket className="h-4 w-4" /> Create an account
+                <Rocket className="h-4 w-4" /> Create account
               </a>
               <a
                 href="https://github.com/grkaym/ExpenseTracker"

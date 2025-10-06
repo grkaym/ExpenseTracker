@@ -4,6 +4,7 @@ import NavLink from '@/breeze/NavLink';
 import ResponsiveNavLink from '@/breeze/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import { Rocket } from 'lucide-react';
 
 export default function AuthenticatedLayout({ header, children }) {
   const user = usePage().props.auth.user;
@@ -45,6 +46,15 @@ export default function AuthenticatedLayout({ header, children }) {
             </div>
 
             <div className="hidden sm:ms-6 sm:flex sm:items-center">
+              {isDemo && (
+                <a
+                  href={route('demo.register')}
+                  className="ml-4 inline-flex items-center gap-2 rounded-md bg-amber-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-amber-600"
+                >
+                  <Rocket className="h-4 w-4" />
+                  Create account
+                </a>
+              )}
               <div className="relative ms-3">
                 <Dropdown>
                   <Dropdown.Trigger>

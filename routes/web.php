@@ -20,13 +20,16 @@ Route::get('/', function () {
 });
 
 // Demo login
+// Demo routes are lightweight (GET only) and rate-limited by throttle middleware.
+// These routes handle demo login/logout/register flows safely without affecting real users.
 Route::controller(DemoController::class)
     ->prefix('demo')
     ->name('demo.')
     ->group(function () {
         Route::get('/login', 'login')->name('login');
         Route::get('/logout', 'logout')->name('logout');
-    });
+        Route::get('/register', 'exitDemoAndRegister')->name('register');
+    })->middleware('throttle:20,1');
 
 // Auth
 Route::middleware('auth')->group(function () {

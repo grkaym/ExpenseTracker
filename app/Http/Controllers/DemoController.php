@@ -62,12 +62,8 @@ class DemoController extends Controller
         // Get the logout user's model
         $user = Auth::user();
 
-        // Logout the user
-        Auth::logout();
-        // Invalidate session
-        $request->session()->invalidate();
-        // Regenerate CSRF Token
-        $request->session()->regenerateToken();
+        // Logout
+        $this->performLogout($request);
 
         // Delete the user.
         // Related transactions and categories will also be deleted automatically
@@ -76,5 +72,30 @@ class DemoController extends Controller
 
         // Redirect to the root page
         return redirect('/');
+    }
+
+    /**
+     * Go to register page with logout
+     */
+    public function exitDemoAndRegister(Request $request): RedirectResponse
+    {
+        // Logout
+        $this->performLogout($request);
+
+        // Redirect to the register page
+        return redirect('/register');
+    }
+
+    /**
+     * Logout and clean up the session safely.
+     */
+    private function performLogout(Request $request): void
+    {
+        // Logout the user
+        Auth::logout();
+        // Invalidate session
+        $request->session()->invalidate();
+        // Regenerate CSRF Token
+        $request->session()->regenerateToken();
     }
 }
