@@ -5,6 +5,7 @@ import Chart from '@/components/Chart';
 import Card from '@/components/Card';
 import TransactionTable from '@/components/TransactionTable';
 import CategoryChart from '@/components/CategoryChart';
+import TransactionCard from '@/components/TransactionCard';
 
 export default function Dashboard({
   income,
@@ -62,9 +63,14 @@ export default function Dashboard({
       </div>
       {/* Recent Transactions */}
       <h2 className="mt-8 text-xl/8 font-bold">Recent Transactions</h2>
-      <Card className="my-4 overflow-x-auto">
+      <Card className="my-4 hidden overflow-x-auto md:block">
         <TransactionTable transactions={recentTrans} />
       </Card>
+      <div className="grid grid-cols-1 gap-2 md:hidden">
+        {recentTrans.map((transaction) => {
+          return <TransactionCard data={transaction} />;
+        })}
+      </div>
     </AuthenticatedLayout>
   );
 }

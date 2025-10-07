@@ -140,7 +140,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
         <div
           className={
-            (showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'
+            (showingNavigationDropdown ? 'block' : 'hidden') + ' md:hidden'
           }
         >
           <div className="space-y-1 pb-3 pt-2">

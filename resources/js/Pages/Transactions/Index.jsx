@@ -9,6 +9,7 @@ import { useMemo, useCallback, useState } from 'react';
 import TransactionTable from '@/components/TransactionTable';
 import { isValid } from 'date-fns';
 import { toYMD } from '@/utils/format';
+import TransactionCard from '@/components/TransactionCard';
 
 export default function Index({ transactions, categories }) {
   // Get shared props
@@ -165,9 +166,14 @@ export default function Index({ transactions, categories }) {
           </Field>
         </div>
       </Card>
-      <Card className="mt-4 overflow-x-auto">
+      <Card className="mt-4 hidden overflow-x-auto md:block">
         <TransactionTable transactions={transactions} />
       </Card>
+      <div className="mt-4 grid grid-cols-1 gap-2 md:hidden">
+        {transactions.map((transaction) => {
+          return <TransactionCard data={transaction} />;
+        })}
+      </div>
     </AuthenticatedLayout>
   );
 }
