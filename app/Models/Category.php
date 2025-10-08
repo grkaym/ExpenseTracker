@@ -5,24 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\{
+    BelongsTo, HasMany, HasOne, BelongsToMany
+};
 
 class Category extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    // ===== [Attributes / Casts] ================================================================
     protected $fillable = [
         'name',
         'type',
         'color',
     ];
+    protected $casts = [];
 
+
+    // ===== [Boot Hooks] =======================================================================
+    protected static function booted(): void
+    {
+        //
+    }
+
+
+    // ===== [Relations] ========================================================================
     /**
      * relationship for User model
      */
@@ -47,6 +54,8 @@ class Category extends Model
         return $this->hasMany(RecurringRule::class);
     }
 
+
+    // ===== [Scopes] ===========================================================================
     /**
      * Scope a query to only include specific type.
      */
@@ -66,4 +75,12 @@ class Category extends Model
                 ->orWhere('user_id', $userId);
         });
     }
+
+
+    // ===== [Accessors / Mutators] ==============================================================
+    // public function getDisplayNameAttribute(): string { return $this->name ?: '(no name)'; }
+
+
+    // ===== [Domain Logic] =====================================================================
+
 }

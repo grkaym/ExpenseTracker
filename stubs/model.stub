@@ -35,11 +35,5 @@ class {{ class }} extends Model
 
 
     // ===== [Domain Logic] =====================================================================
-    // public function cancel(): void
-    // {
-    //     if ($this->status === 'cancelled') {
-    //         throw new \DomainException('Already cancelled.');
-    //     }
-    //     $this->status = 'cancelled';
-    // }
+
 }

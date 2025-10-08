@@ -5,24 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\{
+    BelongsTo, HasMany, HasOne, BelongsToMany
+};
 
 class RecurringRule extends Model
 {
     use HasFactory;
 
-    /**
-     * Get the attributes that should be cast
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // ===== [Attributes / Casts] ================================================================
+    protected $fillable = [];
+    protected $casts = [
+        'next_run_date' => 'datetime:Y-m-d',
+    ];
+
+
+    // ===== [Boot Hooks] =======================================================================
+    protected static function booted(): void
     {
-        return [
-            'next_run_date' => 'datetime:Y-m-d',
-        ];
+        //
     }
 
+
+    // ===== [Relations] ========================================================================
     /**
      * relationship for User model
      */
@@ -39,6 +44,8 @@ class RecurringRule extends Model
         return $this->belongsTo(Category::class);
     }
 
+
+    // ===== [Scopes] ===========================================================================
     /**
      * Scope a query to only include specific user.
      */
@@ -57,4 +64,12 @@ class RecurringRule extends Model
                 ->orWhereNull('is_demo');
         });
     }
+
+
+    // ===== [Accessors / Mutators] ==============================================================
+    // public function getDisplayNameAttribute(): string { return $this->name ?: '(no name)'; }
+
+
+    // ===== [Domain Logic] =====================================================================
+
 }

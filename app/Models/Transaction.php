@@ -6,12 +6,15 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\{
+    BelongsTo, HasMany, HasOne, BelongsToMany
+};
 
 class Transaction extends Model
 {
     use HasFactory;
 
+    // ===== [Attributes / Casts] ================================================================
     /**
      * The attributes that are mass assignable.
      *
@@ -24,7 +27,17 @@ class Transaction extends Model
         'amount',
         'note',
     ];
+    protected $casts = [];
 
+
+    // ===== [Boot Hooks] =======================================================================
+    protected static function booted(): void
+    {
+        //
+    }
+
+
+    // ===== [Relations] ========================================================================
     /**
      * relationship for User model
      */
@@ -41,6 +54,8 @@ class Transaction extends Model
         return $this->belongsTo(Category::class);
     }
 
+
+    // ===== [Scopes] ===========================================================================
     /**
      * Scope a query to only include transactions type of 'income'.
      */
@@ -137,4 +152,11 @@ class Transaction extends Model
             $month->copy()->endOfMonth()->toDateString(),
         ]);
     }
+
+
+    // ===== [Accessors / Mutators] ==============================================================
+
+
+    // ===== [Domain Logic] =====================================================================
+    
 }

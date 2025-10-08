@@ -3,16 +3,20 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\{
+    BelongsTo, HasMany, HasOne, BelongsToMany
+};
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    // ===== [Attributes / Casts] ================================================================
     /**
      * The attributes that are mass assignable.
      *
@@ -24,7 +28,7 @@ class User extends Authenticatable
         'password',
         'is_demo',
     ];
-
+    
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -35,19 +39,20 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+
+    // ===== [Boot Hooks] =======================================================================
+    protected static function booted(): void
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        //
     }
 
+
+    // ===== [Relations] ========================================================================
     /**
      * relationship for Transaction model
      */
@@ -71,4 +76,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(RecurringRule::class);
     }
+
+
+    // ===== [Scopes] ===========================================================================
+    // public function scopeActive(Builder $q): Builder { return $q->where('is_active', true); }
+
+
+    // ===== [Accessors / Mutators] ==============================================================
+    // public function getDisplayNameAttribute(): string { return $this->name ?: '(no name)'; }
+
+
+    // ===== [Domain Logic] =====================================================================
+
 }
