@@ -1,0 +1,45 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\{
+    BelongsTo, HasMany, HasOne, BelongsToMany
+};
+
+class {{ class }} extends Model
+{
+    // ===== [Attributes / Casts] ================================================================
+    protected $fillable = [];
+    protected $casts = [];
+
+
+    // ===== [Boot Hooks] =======================================================================
+    protected static function booted(): void
+    {
+        //
+    }
+
+
+    // ===== [Relations] ========================================================================
+    // public function user(): BelongsTo { return $this->belongsTo(User::class); }
+
+
+    // ===== [Scopes] ===========================================================================
+    // public function scopeActive(Builder $q): Builder { return $q->where('is_active', true); }
+
+
+    // ===== [Accessors / Mutators] ==============================================================
+    // public function getDisplayNameAttribute(): string { return $this->name ?: '(no name)'; }
+
+
+    // ===== [Domain Logic] =====================================================================
+    // public function cancel(): void
+    // {
+    //     if ($this->status === 'cancelled') {
+    //         throw new \DomainException('Already cancelled.');
+    //     }
+    //     $this->status = 'cancelled';
+    // }
+}
