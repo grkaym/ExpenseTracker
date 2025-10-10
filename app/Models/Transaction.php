@@ -26,8 +26,11 @@ class Transaction extends Model
         'type',
         'amount',
         'note',
+        'recurring_id',
     ];
-    protected $casts = [];
+    protected $casts = [
+        'recurring_id' => 'integer',
+    ];
 
 
     // ===== [Boot Hooks] =======================================================================
@@ -158,5 +161,23 @@ class Transaction extends Model
 
 
     // ===== [Domain Logic] =====================================================================
-    
+    /**
+     * Store a new transaction for the given user
+     * 
+     * Accepts validated attributes and persists a transaction
+     * Optional: supports linking to a recurring rule via $data['recurring_id']
+     */
+    public static function createForUser(int $userId, array $data): self
+    {
+        // Create a new Transaction
+        return self::create([
+            'user_id'       => $userId,
+            'date'          => $data['date'],
+            'category_id'   => $data['category'],
+            'type'          => $data['type'],
+            'amount'        => $data['amount'],
+            'note'          => $data['note'] ?? null,
+            'recurring_id'  => $data['recurring_id'] ?? null,
+        ]);
+    }
 }

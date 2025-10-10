@@ -63,11 +63,8 @@ class TransactionController extends Controller
      */
     public function create(): Response
     {
-        // Get login user's id.
-        $userId = Auth::id();
-
         // Get categories for the login user.
-        $categories = Category::forUser($userId)->get();
+        $categories = Category::forUser(Auth::id())->get();
 
         return Inertia::render('Transactions/Create', [
             'categories' => $categories,
@@ -79,18 +76,8 @@ class TransactionController extends Controller
      */
     public function store(StoreTransactionRequest $request): RedirectResponse
     {
-        // Retrieve the validated input data
-        $data = $request->validated();
-
-        // Store the transaction
-        $t = new Transaction;
-        $t->user_id = Auth::id();
-        $t->date = $data['date'];
-        $t->category_id = $data['category'];
-        $t->type = $data['type'];
-        $t->amount = $data['amount'];
-        $t->note = $data['note'];
-        $t->save();
+        // Validate request and store the transaction
+        Transaction::createForUser(Auth::id(), $request->validated());
 
         // Redirect to transaction list page
         return to_route('transactions.index');

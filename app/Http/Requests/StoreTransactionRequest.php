@@ -27,6 +27,7 @@ class StoreTransactionRequest extends FormRequest
             'type' => 'required|in:expense,income',
             'amount' => 'required|decimal:2|min:0|max:9999999999.99',
             'note' => 'nullable|max:255',
+            'recurring_id' => 'nullable|exists:recurringRules,id',
         ];
     }
 }
