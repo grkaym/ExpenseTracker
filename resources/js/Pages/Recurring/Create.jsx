@@ -72,82 +72,88 @@ export default function Create({ categories }) {
   return (
     <AuthenticatedLayout>
       <Head title="Add Recurring Rule" />
-      <h2 className="text-xl/8 font-bold">Add Recurring Rule</h2>
-      <Card className="mt-4">
-        <form onSubmit={submit} className="space-y-6">
-          {/* Category field */}
-          <Field htmlFor="category" label="Category" error={errors.category}>
-            <SelectBox
-              groupedOptionArray={categoryList}
-              id="category"
-              value={data.category}
-              onChange={onCategoryChange}
-              className="flex w-full"
-              ph="Select a category..."
-            />
-          </Field>
-          {/* Type field */}
-          <Field htmlFor="type" label="Type" error={errors.type}>
-            {data.type ? (
-              <div className="p-2 text-lg font-normal text-slate-500">
-                {data.type}
-              </div>
-            ) : (
-              <div className="p-2 text-lg font-normal text-slate-400">
-                Select a category...
-              </div>
-            )}
-          </Field>
-          {/* Amount field */}
-          <Field htmlFor="amount" label="Amount" error={errors.amount}>
-            <AmountInput
-              id="amount"
-              value={data.amount}
-              onChange={(v) => setData('amount', v)}
-              className="w-full"
-            />
-          </Field>
-          {/* Note field */}
-          <Field htmlFor="note" label="Note" error={errors.note}>
-            <TextArea
-              id="note"
-              value={data.note}
-              onChange={(v) => setData('note', v)}
-              className="w-full"
-            />
-          </Field>
-          {/* Start date field */}
-          <Field
-            htmlFor="startDate"
-            label="Start Date"
-            error={errors.startDate}
-          >
-            <DatePicker
-              id="startDate"
-              value={dateObj}
-              onChange={onStartDateChange}
-              className="w-full"
-            />
-          </Field>
-          {/* Frequency field */}
-          <Field htmlFor="frequency" label="Frequency" error={errors.category}>
-            <SelectBox
-              optionArray={[
-                { label: 'daily', value: 'daily' },
-                { label: 'weekly', value: 'weekly' },
-                { label: 'monthly', value: 'monthly' },
-              ]}
-              id="frequency"
-              value={data.frequency}
-              onChange={onFrequencyChange}
-              className="flex w-full"
-              defaultValue="daily"
-            />
-          </Field>
-          {/* Submit button */}
-          <Button text="Submit" type="submit" disabled={processing} />
-        </form>
-      </Card>
+      <div className="mx-auto max-w-xl md:max-w-2xl">
+        <h2 className="text-xl/8 font-bold">Add Recurring Rule</h2>
+        <Card className="mt-4">
+          <form onSubmit={submit} className="space-y-6">
+            {/* Category field */}
+            <Field htmlFor="category" label="Category" error={errors.category}>
+              <SelectBox
+                groupedOptionArray={categoryList}
+                id="category"
+                value={data.category}
+                onChange={onCategoryChange}
+                className="flex w-full"
+                ph="Select a category..."
+              />
+            </Field>
+            {/* Type field */}
+            <Field htmlFor="type" label="Type" error={errors.type}>
+              {data.type ? (
+                <div className="p-2 text-lg font-normal text-slate-500">
+                  {data.type}
+                </div>
+              ) : (
+                <div className="p-2 text-lg font-normal text-slate-400">
+                  Select a category...
+                </div>
+              )}
+            </Field>
+            {/* Amount field */}
+            <Field htmlFor="amount" label="Amount" error={errors.amount}>
+              <AmountInput
+                id="amount"
+                value={data.amount}
+                onChange={(v) => setData('amount', v)}
+                className="w-full"
+              />
+            </Field>
+            {/* Note field */}
+            <Field htmlFor="note" label="Note" error={errors.note}>
+              <TextArea
+                id="note"
+                value={data.note}
+                onChange={(v) => setData('note', v)}
+                className="w-full"
+              />
+            </Field>
+            {/* Start date field */}
+            <Field
+              htmlFor="startDate"
+              label="Start Date"
+              error={errors.startDate}
+            >
+              <DatePicker
+                id="startDate"
+                value={dateObj}
+                onChange={onStartDateChange}
+                className="w-full"
+              />
+            </Field>
+            {/* Frequency field */}
+            <Field
+              htmlFor="frequency"
+              label="Frequency"
+              error={errors.category}
+            >
+              <SelectBox
+                optionArray={[
+                  { label: 'daily', value: 'daily' },
+                  { label: 'weekly', value: 'weekly' },
+                  { label: 'monthly', value: 'monthly' },
+                ]}
+                id="frequency"
+                value={data.frequency}
+                onChange={onFrequencyChange}
+                className="flex w-full"
+                defaultValue="daily"
+              />
+            </Field>
+            {/* Submit button */}
+            <Button text="Submit" type="submit" disabled={processing} />
+          </form>
+        </Card>
+      </div>
     </AuthenticatedLayout>
   );
 }
