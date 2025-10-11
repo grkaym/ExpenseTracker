@@ -6,9 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{
-    BelongsTo, HasMany, HasOne, BelongsToMany
-};
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transaction extends Model
 {
@@ -28,17 +26,16 @@ class Transaction extends Model
         'note',
         'recurring_id',
     ];
+
     protected $casts = [
         'recurring_id' => 'integer',
     ];
-
 
     // ===== [Boot Hooks] =======================================================================
     protected static function booted(): void
     {
         //
     }
-
 
     // ===== [Relations] ========================================================================
     /**
@@ -56,7 +53,6 @@ class Transaction extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
 
     // ===== [Scopes] ===========================================================================
     /**
@@ -156,14 +152,12 @@ class Transaction extends Model
         ]);
     }
 
-
     // ===== [Accessors / Mutators] ==============================================================
-
 
     // ===== [Domain Logic] =====================================================================
     /**
      * Store a new transaction for the given user
-     * 
+     *
      * Accepts validated attributes and persists a transaction
      * Optional: supports linking to a recurring rule via $data['recurring_id']
      */
@@ -171,13 +165,13 @@ class Transaction extends Model
     {
         // Create a new Transaction
         return self::create([
-            'user_id'       => $userId,
-            'date'          => $data['date'],
-            'category_id'   => $data['category'],
-            'type'          => $data['type'],
-            'amount'        => $data['amount'],
-            'note'          => $data['note'] ?? null,
-            'recurring_id'  => $data['recurring_id'] ?? null,
+            'user_id' => $userId,
+            'date' => $data['date'],
+            'category_id' => $data['category'],
+            'type' => $data['type'],
+            'amount' => $data['amount'],
+            'note' => $data['note'] ?? null,
+            'recurring_id' => $data['recurring_id'] ?? null,
         ]);
     }
 }

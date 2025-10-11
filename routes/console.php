@@ -1,7 +1,7 @@
 <?php
 
-use App\Actions\ProcessRecurringRule;
 use App\Actions\DeleteDemoData;
+use App\Actions\ProcessRecurringRule;
 use Illuminate\Support\Facades\Schedule;
 
 // Delete demo user and demo data

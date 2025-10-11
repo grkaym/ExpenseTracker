@@ -10,13 +10,6 @@ import {
   Wallet,
 } from 'lucide-react';
 
-// Minimal, clean, Tailwind only. Drop into resources/js/Pages/LandingPage.tsx (Inertia)
-// Routes to consider:
-//  - GET / -> LandingPage
-//  - /demo -> auto-login demo
-//  - /register, /login
-//  - Github repo link (replace below)
-
 export default function Landing() {
   return (
     <main className="min-h-screen bg-white text-gray-900">

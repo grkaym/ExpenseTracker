@@ -5,9 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{
-    BelongsTo, HasMany, HasOne, BelongsToMany
-};
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class RecurringRule extends Model
 {
@@ -15,17 +13,16 @@ class RecurringRule extends Model
 
     // ===== [Attributes / Casts] ================================================================
     protected $fillable = [];
+
     protected $casts = [
         'next_run_date' => 'datetime:Y-m-d',
     ];
-
 
     // ===== [Boot Hooks] =======================================================================
     protected static function booted(): void
     {
         //
     }
-
 
     // ===== [Relations] ========================================================================
     /**
@@ -43,7 +40,6 @@ class RecurringRule extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
 
     // ===== [Scopes] ===========================================================================
     /**
@@ -65,10 +61,8 @@ class RecurringRule extends Model
         });
     }
 
-
     // ===== [Accessors / Mutators] ==============================================================
     // public function getDisplayNameAttribute(): string { return $this->name ?: '(no name)'; }
-
 
     // ===== [Domain Logic] =====================================================================
 

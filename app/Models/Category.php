@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{
-    BelongsTo, HasMany, HasOne, BelongsToMany
-};
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
@@ -19,15 +18,14 @@ class Category extends Model
         'type',
         'color',
     ];
-    protected $casts = [];
 
+    protected $casts = [];
 
     // ===== [Boot Hooks] =======================================================================
     protected static function booted(): void
     {
         //
     }
-
 
     // ===== [Relations] ========================================================================
     /**
@@ -54,7 +52,6 @@ class Category extends Model
         return $this->hasMany(RecurringRule::class);
     }
 
-
     // ===== [Scopes] ===========================================================================
     /**
      * Scope a query to only include specific type.
@@ -76,10 +73,8 @@ class Category extends Model
         });
     }
 
-
     // ===== [Accessors / Mutators] ==============================================================
     // public function getDisplayNameAttribute(): string { return $this->name ?: '(no name)'; }
-
 
     // ===== [Domain Logic] =====================================================================
 
