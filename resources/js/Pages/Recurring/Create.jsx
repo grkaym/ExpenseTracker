@@ -134,7 +134,7 @@ export default function Create({ categories }) {
             <Field
               htmlFor="frequency"
               label="Frequency"
-              error={errors.category}
+              error={errors.frequency}
             >
               <SelectBox
                 optionArray={[
