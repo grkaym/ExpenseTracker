@@ -110,7 +110,7 @@ export default function Landing() {
       </section>
 
       {/* Features */}
-      <section id="features" className="border-t border-gray-100">
+      <section id="features" className="border-t border-gray-100 bg-gray-50">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-semibold">What you get</h2>
@@ -159,7 +159,7 @@ export default function Landing() {
       </section>
 
       {/* Screens */}
-      <section id="screens" className="border-t border-gray-100 bg-gray-50">
+      {/* <section id="screens" className="border-t border-gray-100 bg-gray-50">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <div className="mb-8 flex items-end justify-between">
             <h2 className="text-2xl font-semibold">Screens</h2>
@@ -188,7 +188,7 @@ export default function Landing() {
             </ScreenCard>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* FAQ */}
       <section id="faq" className="border-t border-gray-100">
