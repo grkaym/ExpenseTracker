@@ -17,6 +17,7 @@ This project was created as a **portfolio piece** to demonstrate full-stack deve
 - CSV export (server-side)
 - Monthly email summary (queued)
 - Multi-currency support
+- Edit/Delete (Transactions, Recurring rules)
 
 ## Tech Stack
 
