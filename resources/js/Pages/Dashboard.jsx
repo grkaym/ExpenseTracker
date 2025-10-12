@@ -57,7 +57,14 @@ export default function Dashboard({
             This Month's Expenses by Category
           </h2>
           <Card className="my-4">
-            <CategoryChart data={pieData} />
+            {pieData.length > 0 ? (
+              <CategoryChart data={pieData} />
+            ) : (
+              <div className="flex h-[500px] flex-col items-center justify-center text-gray-500">
+                <p className="mb-4">No spending data yet for this month.</p>
+                <p>Your category summary will appear here.</p>
+              </div>
+            )}
           </Card>
         </div>
       </div>
