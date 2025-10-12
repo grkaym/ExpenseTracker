@@ -17,9 +17,6 @@ export default function Landing() {
       <header className="sticky top-0 z-30 border-b border-gray-100 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <a href="#home" className="flex items-center gap-2 font-semibold">
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-amber-100">
-              <Wallet className="h-4 w-4" />
-            </span>
             Expense Tracker
           </a>
           <nav className="hidden items-center gap-6 text-sm text-gray-600 md:flex">
