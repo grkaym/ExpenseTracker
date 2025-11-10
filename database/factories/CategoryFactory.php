@@ -16,11 +16,12 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        // Generate categories randomly
+        // Default: produce a random category so using the factory without a state
+        // won't always create a fixed "Food" record (which caused duplicates).
         return [
             'user_id' => null,
-            'type' => 'expense',
-            'name' => 'Food',
+            'type' => fake()->randomElement(['expense', 'income']),
+            'name' => fake()->unique()->word(),
         ];
     }
 
