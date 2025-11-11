@@ -1,21 +1,23 @@
 <?php
 
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 
 // Reset the database after each of tests.
-pest()->use(RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 test('it stores a transaction in the databse', function () {
     // test user
-    $user = User::find(1);
+    $user = User::factory()->create();
+    $category = Category::factory()->create();
 
     $response = $this->actingAs($user)
         ->post(route('transactions.store'), [
             'user_id' => Auth::id(),
             'date' => '2025-09-01',
-            'category' => '1',
+            'category' => (string) $category->id,
             'type' => 'expense',
             'amount' => '100.00',
             'note' => 'This is a test transaction.',
@@ -29,7 +31,7 @@ test('it stores a transaction in the databse', function () {
     $this->assertDatabaseHas('transactions', [
         'user_id' => Auth::id(),
         'date' => '2025-09-01',
-        'category_id' => '1',
+        'category_id' => $category->id,
         'type' => 'expense',
         'amount' => '100.00',
         'note' => 'This is a test transaction.',
@@ -38,13 +40,14 @@ test('it stores a transaction in the databse', function () {
 
 test('they are invalid dates', function ($date) {
     // test user
-    $user = User::find(1);
+    $user = User::factory()->create();
+    $category = Category::factory()->create();
 
     $response = $this->actingAs($user)
         ->post(route('transactions.store'), [
             'user_id' => Auth::id(),
             'date' => $date,
-            'category' => '1',
+            'category' => (string) $category->id,
             'type' => 'expense',
             'amount' => '100.00',
             'note' => 'This is a test transaction.',
@@ -63,13 +66,14 @@ test('they are invalid dates', function ($date) {
 
 test('they are invalid types', function ($type) {
     // test user
-    $user = User::find(1);
+    $user = User::factory()->create();
+    $category = Category::factory()->create();
 
     $response = $this->actingAs($user)
         ->post(route('transactions.store'), [
             'user_id' => Auth::id(),
             'date' => '2025-09-01',
-            'category' => '1',
+            'category' => (string) $category->id,
             'type' => $type,
             'amount' => '100.00',
             'note' => 'This is a test transaction.',
@@ -87,13 +91,14 @@ test('they are invalid types', function ($type) {
 
 test('they are invalid amounts', function ($amount) {
     // test user
-    $user = User::find(1);
+    $user = User::factory()->create();
+    $category = Category::factory()->create();
 
     $response = $this->actingAs($user)
         ->post(route('transactions.store'), [
             'user_id' => Auth::id(),
             'date' => '2025-09-01',
-            'category' => '1',
+            'category' => (string) $category->id,
             'type' => 'expense',
             'amount' => $amount,
             'note' => 'This is a test transaction.',

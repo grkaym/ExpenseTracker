@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
+            Route::get('/{transaction}/edit', 'edit')->name('edit');
+            Route::patch('/{transaction}', 'update')->name('update');
             Route::post('/store', 'store')->name('store');
         });
     // Recurring Rule

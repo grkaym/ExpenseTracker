@@ -147,21 +147,21 @@ export default function Index({ transactions, categories }) {
             <SelectBox
               groupedOptionArray={categoryList}
               onChange={onCategoryChange}
-              defaultValue={filters.category}
+              value={filters.category}
             />
           </Field>
           <Field label="Type" className="w-full">
             <SelectBox
               optionArray={transactionType}
               onChange={onTypeChange}
-              defaultValue={filters.type}
+              value={filters.type}
             />
           </Field>
           <Field label="Sort" className="w-full">
             <SelectBox
               optionArray={sortType}
               onChange={onSortChange}
-              defaultValue={filters.sort}
+              value={filters.sort}
             />
           </Field>
         </div>

@@ -71,6 +71,45 @@ class TransactionController extends Controller
         ]);
     }
 
+        /**
+         * Display the transaction edit page
+         */
+        public function edit(Transaction $transaction): Response
+        {
+            // Ensure the transaction belongs to the authenticated user
+            $transaction = Transaction::with('category')
+                ->forUser(Auth::id())
+                ->where('id', $transaction->id)
+                ->firstOrFail();
+
+            $categories = Category::forUser(Auth::id())->get();
+
+            return Inertia::render('Transactions/Edit', [
+                'transaction' => $transaction,
+                'categories' => $categories,
+            ]);
+        }
+
+        /**
+         * Update the specified transaction
+         */
+        public function update(StoreTransactionRequest $request, Transaction $transaction)
+        {
+            // Ensure the transaction belongs to the authenticated user
+            $tx = Transaction::forUser(Auth::id())->where('id', $transaction->id)->firstOrFail();
+
+            $tx->update([
+                'date' => $request->validated()['date'],
+                'category_id' => $request->validated()['category'],
+                'type' => $request->validated()['type'],
+                'amount' => $request->validated()['amount'],
+                'note' => $request->validated()['note'] ?? null,
+                'recurring_id' => $request->validated()['recurring_id'] ?? null,
+            ]);
+
+            return to_route('transactions.index');
+        }
+
     /**
      * Store the values entered on the transaction create page.
      */

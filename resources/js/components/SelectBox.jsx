@@ -14,8 +14,8 @@ function SelectBoxImpl({
   defaultValue = '',
   ph,
 }) {
-  // Get state of the selected value
-  const [val, setVal] = useState(defaultValue ?? '');
+  // Get state of the selected value. Prefer controlled `value` prop, fallback to `defaultValue`.
+  const [val, setVal] = useState(value ?? defaultValue ?? '');
 
   // // Classify options by type
   const grouped = groupedOptionArray?.reduce((acc, cur) => {
@@ -25,14 +25,16 @@ function SelectBoxImpl({
     return acc;
   }, {});
 
-  // Reflect changing date value by the parent
+  // Reflect changing value prop by the parent
   useEffect(() => {
-    setVal(value);
+    if (value !== undefined) {
+      setVal(value);
+    }
   }, [value]);
 
   return (
     <Select.Root
-      defaultValue={val}
+      value={val}
       onValueChange={(v) => {
         setVal(v);
         onChange && onChange(v);

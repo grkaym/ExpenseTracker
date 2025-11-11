@@ -19,6 +19,7 @@ class Transaction extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'user_id',
         'category_id',
         'date',
         'type',
