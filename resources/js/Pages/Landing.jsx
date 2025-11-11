@@ -23,9 +23,6 @@ export default function Landing() {
             <a href="#features" className="hover:text-gray-900">
               Features
             </a>
-            <a href="#screens" className="hover:text-gray-900">
-              Screens
-            </a>
             <a href="#faq" className="hover:text-gray-900">
               FAQ
             </a>
@@ -92,19 +89,21 @@ export default function Landing() {
               <li>AWS Lightsail</li>
             </ul>
           </div>
-          {/* Screenshot placeholder */}
+          {/* Screenshot */}
           <div className="relative">
-            <div className="rounded-2xl border border-gray-200 bg-white p-2 shadow-sm">
+            <div className="rounded-2xl border border-gray-200 bg-white p-0 shadow-sm">
               <div className="aspect-video w-full overflow-hidden rounded-xl bg-gray-50">
-                {/* Replace with real app screenshot */}
-                <div className="flex h-full items-center justify-center text-gray-400">
-                  App screenshot
-                </div>
+                {/* Use a local image placed at public/images/lp-screenshot.png */}
+                <img
+                  src="/images/lp-screenshot.png"
+                  alt="Expense Tracker screenshot"
+                  className="block h-full w-full object-cover object-left-top"
+                  loading="lazy"
+                />
               </div>
             </div>
-            <div className="absolute -bottom-4 -right-4 hidden w-40 rotate-3 rounded-xl border border-gray-200 bg-white p-2 shadow-sm md:block">
-              <div className="aspect-[4/3] w-full rounded-lg bg-gray-50" />
-            </div>
+
+            {/* Small rotated thumbnail removed — only the main screenshot is shown now */}
           </div>
         </div>
       </section>
