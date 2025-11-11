@@ -1,7 +1,7 @@
 import Card from '@/components/Card';
 import { formatCurrency, toYMD } from '@/utils/format';
 import { useCallback } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 
 export default function TransactionCard({ data }) {
   const handleEdit = useCallback(() => {
@@ -11,11 +11,10 @@ export default function TransactionCard({ data }) {
   }, [data.id]);
 
   const handleDelete = useCallback(() => {
-    // Client-side placeholder for delete
+    // Confirm then call server to delete
     // eslint-disable-next-line no-alert
-    if (confirm(`Delete transaction id ${data.id}? This is a placeholder.`)) {
-      // eslint-disable-next-line no-console
-      console.log('Delete confirmed for', data.id);
+    if (confirm('Delete this transaction?')) {
+      router.delete(route('transactions.destroy', data.id));
     }
   }, [data.id]);
 

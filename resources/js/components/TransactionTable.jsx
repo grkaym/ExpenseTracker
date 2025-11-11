@@ -1,6 +1,6 @@
 import { formatCurrency } from '@/utils/format';
 import { useCallback } from 'react';
-import { Link } from '@inertiajs/react';
+import { Link, router } from '@inertiajs/react';
 
 export default function TransactionTable({ transactions }) {
   return (
@@ -20,14 +20,10 @@ export default function TransactionTable({ transactions }) {
       <tbody>
         {transactions.map((t, index) => {
           const handleDelete = useCallback(() => {
-            // Client-side placeholder for delete
+            // Confirm then call server to delete
             // eslint-disable-next-line no-alert
-            if (
-              confirm(`Delete transaction id ${t.id}? This is a placeholder.`)
-            ) {
-              // In future, call router.delete(route('transactions.destroy', t.id))
-              // eslint-disable-next-line no-console
-              console.log('Delete confirmed for', t.id);
+            if (confirm('Delete this transaction?')) {
+              router.delete(route('transactions.destroy', t.id));
             }
           }, [t.id]);
 
