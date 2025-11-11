@@ -121,4 +121,23 @@ class TransactionController extends Controller
         // Redirect to transaction list page
         return to_route('transactions.index');
     }
+
+    /**
+     * Remove the specified transaction.
+     */
+    public function destroy(Transaction $transaction)
+    {
+        // Find transaction
+        $tx = Transaction::findOrFail($transaction->id);
+
+        // Only owner can delete
+        if ($tx->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $tx->delete();
+
+        // Use Inertia::location to ensure the client navigates correctly after a non-GET
+        return Inertia::location(route('transactions.index'));
+    }
 }
