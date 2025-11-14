@@ -42,6 +42,12 @@ export default function AuthenticatedLayout({ header, children }) {
                 >
                   Recurring Rules
                 </NavLink>
+                <NavLink
+                  href={route('categories.index')}
+                  active={route().current('categories.*')}
+                >
+                  Categories
+                </NavLink>
               </div>
             </div>
 
@@ -161,6 +167,12 @@ export default function AuthenticatedLayout({ header, children }) {
               active={route().current('recurring.*')}
             >
               Recurring Rules
+            </ResponsiveNavLink>
+            <ResponsiveNavLink
+              href={route('categories.index')}
+              active={route().current('categories.*')}
+            >
+              Categories
             </ResponsiveNavLink>
           </div>
 

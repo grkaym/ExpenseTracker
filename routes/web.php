@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\ProfileController;
@@ -55,6 +56,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::post('/store', 'store')->name('store');
+        });
+    // Categories
+    Route::controller(CategoryController::class)
+        ->prefix('categories')
+        ->name('categories.')
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
         });
 });
 
