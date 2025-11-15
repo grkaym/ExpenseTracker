@@ -1,7 +1,7 @@
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import { formatCurrency } from '@/utils/format';
 
-const COLORS = [
+const FALLBACK_COLORS = [
   '#34d399', // green-400
   '#fbbf24', // amber-400
   '#a78bfa', // violet-400
@@ -41,7 +41,9 @@ export default function CategoryChart({ data }) {
             {data.map((entry, index) => (
               <Cell
                 key={`cell-${entry.name}`}
-                fill={COLORS[index % COLORS.length]}
+                fill={
+                  entry.color || FALLBACK_COLORS[index % FALLBACK_COLORS.length]
+                }
               />
             ))}
           </Pie>
@@ -65,13 +67,20 @@ export default function CategoryChart({ data }) {
       </ResponsiveContainer>
       <ul className="flex w-full flex-1 flex-col items-start justify-center space-y-2 pl-4 md:flex-col">
         {catList.map((entry, index) => (
-          <li
-            key={`label-${entry.name}`}
-            className={`text-[${COLORS[index % COLORS.length]}]`}
-          >
-            {entry.name} - ${formatCurrency(entry.value.toFixed(2))} (
-            {entry.percent.toFixed(1)}
-            %)
+          <li key={`label-${entry.name}`} className="flex items-center gap-2">
+            <span
+              className="inline-block h-3 w-3 rounded-sm"
+              style={{
+                backgroundColor:
+                  entry.color ||
+                  FALLBACK_COLORS[index % FALLBACK_COLORS.length],
+              }}
+            />
+            <span>
+              {entry.name} - ${formatCurrency(entry.value.toFixed(2))} (
+              {entry.percent.toFixed(1)}
+              %)
+            </span>
           </li>
         ))}
       </ul>

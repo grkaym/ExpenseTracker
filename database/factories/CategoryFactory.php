@@ -22,6 +22,7 @@ class CategoryFactory extends Factory
             'user_id' => null,
             'type' => fake()->randomElement(['expense', 'income']),
             'name' => fake()->unique()->word(),
+            'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ];
     }
 
@@ -39,6 +40,7 @@ class CategoryFactory extends Factory
             'user_id' => null,  // common category
             'type' => 'expense',
             'name' => fake()->unique()->randomElement($names),
+            'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ]);
     }
 
@@ -56,6 +58,7 @@ class CategoryFactory extends Factory
             'user_id' => null,  // common category
             'type' => 'income',
             'name' => fake()->unique()->randomElement($names),
+            'color' => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
         ]);
     }
 }

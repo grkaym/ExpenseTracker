@@ -47,7 +47,7 @@ class DashboardController extends Controller
             ->get();
 
         // Get expense transactions grouped by category
-        $pieData = Transaction::selectRaw('categories.name, CAST(SUM(transactions.amount) AS DOUBLE) as value')
+        $pieData = Transaction::selectRaw('categories.name, categories.color, CAST(SUM(transactions.amount) AS DOUBLE) as value')
             ->join('categories', 'transactions.category_id', '=', 'categories.id')
             ->where('transactions.user_id', $userId)
             ->where('categories.type', 'expense')
