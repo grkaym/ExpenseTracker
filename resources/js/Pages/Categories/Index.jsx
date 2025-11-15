@@ -1,11 +1,35 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import Card from '@/components/Card';
+import Field from '@/components/Field';
+import TextInput from '@/components/TextInput';
+import SelectBox from '@/components/SelectBox';
+import Button from '@/components/Button';
 
 export default function Index({ categories }) {
   // Group categories by type
   const expenseCategories = categories.filter((c) => c.type === 'expense');
   const incomeCategories = categories.filter((c) => c.type === 'income');
+
+  // Form for adding new category
+  const { data, setData, post, processing, errors, reset } = useForm({
+    name: '',
+    type: 'expense',
+  });
+
+  // Submit handler
+  const submit = (e) => {
+    e.preventDefault();
+    post(route('categories.store'), {
+      onSuccess: () => reset(),
+    });
+  };
+
+  // Type options for dropdown
+  const typeOptions = [
+    { value: 'expense', label: 'Expense' },
+    { value: 'income', label: 'Income' },
+  ];
 
   return (
     <AuthenticatedLayout>
@@ -50,6 +74,52 @@ export default function Index({ categories }) {
           {incomeCategories.length === 0 && (
             <p className="text-gray-500">No income categories found.</p>
           )}
+        </div>
+
+        {/* Add Category Form */}
+        <div>
+          <h2 className="mb-4 text-xl/8 font-bold">Add New Category</h2>
+          <Card>
+            <form
+              onSubmit={submit}
+              className="flex flex-col gap-4 sm:flex-row sm:items-end"
+            >
+              <Field
+                htmlFor="name"
+                label="Name"
+                error={errors.name}
+                className="flex-1"
+              >
+                <TextInput
+                  id="name"
+                  value={data.name}
+                  onChange={(v) => setData('name', v)}
+                  className="px-4 py-1.5"
+                />
+              </Field>
+
+              <Field
+                htmlFor="type"
+                label="Type"
+                error={errors.type}
+                className="sm:w-40"
+              >
+                <SelectBox
+                  id="type"
+                  optionArray={typeOptions}
+                  value={data.type}
+                  onChange={(v) => setData('type', v)}
+                  className="px-4 py-1.5"
+                />
+              </Field>
+
+              <Button
+                type="submit"
+                text={processing ? 'Saving...' : 'Save'}
+                disabled={processing}
+              />
+            </form>
+          </Card>
         </div>
       </div>
     </AuthenticatedLayout>

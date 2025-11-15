@@ -14,6 +14,7 @@ class Category extends Model
 
     // ===== [Attributes / Casts] ================================================================
     protected $fillable = [
+        'user_id',
         'name',
         'type',
         'color',
