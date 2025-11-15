@@ -31,7 +31,13 @@ export default function TransactionTable({ transactions }) {
             <tr key={index} className="border-t odd:bg-white even:bg-gray-50">
               <td className="border-l border-slate-200 px-4 py-2">{t.date}</td>
               <td className="border-l border-slate-200 px-4 py-2">
-                {t.category.name}
+                <div className="flex items-center gap-2">
+                  <span
+                    className="inline-block h-2.5 w-2.5 rounded-full"
+                    style={{ backgroundColor: t.category?.color || '#cbd5e1' }}
+                  />
+                  <span>{t.category.name}</span>
+                </div>
               </td>
               <td className="border-l border-slate-200 px-4 py-2">{t.type}</td>
               <td
