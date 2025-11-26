@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, router } from '@inertiajs/react';
 import Card from '@/components/Card';
 import Field from '@/components/Field';
 import TextInput from '@/components/TextInput';
@@ -41,12 +41,38 @@ export default function Index({ categories }) {
           <div className="gap-4 space-y-4 lg:grid lg:grid-cols-4 lg:space-y-0">
             {expenseCategories.map((category) => (
               <Card key={category.id}>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between gap-3">
                   <div
                     className="h-4 w-4 rounded-full"
                     style={{ backgroundColor: category.color }}
                   />
-                  <span className="font-medium">{category.name}</span>
+                  <span className="ml-2 flex-1 font-medium">
+                    {category.name}
+                  </span>
+                  {category.user_id && (
+                    <button
+                      type="button"
+                      title="Delete"
+                      aria-label="Delete category"
+                      className="rounded px-2 py-1 text-gray-400 hover:bg-red-50 hover:text-red-600"
+                      onClick={() => {
+                        if (
+                          confirm(
+                            'Are you sure you want to delete this category?'
+                          )
+                        ) {
+                          router.delete(
+                            route('categories.destroy', category.id),
+                            {
+                              preserveScroll: true,
+                            }
+                          );
+                        }
+                      }}
+                    >
+                      &times;
+                    </button>
+                  )}
                 </div>
               </Card>
             ))}
@@ -61,12 +87,38 @@ export default function Index({ categories }) {
           <div className="gap-4 space-y-4 lg:grid lg:grid-cols-4 lg:space-y-0">
             {incomeCategories.map((category) => (
               <Card key={category.id}>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-between gap-3">
                   <div
                     className="h-4 w-4 rounded-full"
                     style={{ backgroundColor: category.color }}
                   />
-                  <span className="font-medium">{category.name}</span>
+                  <span className="ml-2 flex-1 font-medium">
+                    {category.name}
+                  </span>
+                  {category.user_id && (
+                    <button
+                      type="button"
+                      title="Delete"
+                      aria-label="Delete category"
+                      className="rounded px-2 py-1 text-gray-400 hover:bg-red-50 hover:text-red-600"
+                      onClick={() => {
+                        if (
+                          confirm(
+                            'Are you sure you want to delete this category?'
+                          )
+                        ) {
+                          router.delete(
+                            route('categories.destroy', category.id),
+                            {
+                              preserveScroll: true,
+                            }
+                          );
+                        }
+                      }}
+                    >
+                      &times;
+                    </button>
+                  )}
                 </div>
               </Card>
             ))}

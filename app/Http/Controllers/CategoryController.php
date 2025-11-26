@@ -45,4 +45,28 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index');
     }
+
+    /**
+     * Remove the specified category from storage.
+     */
+    public function destroy(Category $category): RedirectResponse
+    {
+        $userId = Auth::id();
+
+        // Only allow deleting categories owned by the current user
+        if ($category->user_id === null || $category->user_id !== $userId) {
+            abort(403);
+        }
+
+        // Prevent deletion if category is used by any transactions
+        if ($category->transactions()->exists()) {
+            return back()->withErrors([
+                'category' => 'This category cannot be deleted because it is being used by transactions.',
+            ]);
+        }
+
+        $category->delete();
+
+        return redirect()->route('categories.index');
+    }
 }

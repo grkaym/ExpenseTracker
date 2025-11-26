@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('/', 'store')->name('store');
+            Route::delete('/{category}', 'destroy')->name('destroy');
         });
 });
 
